@@ -74,8 +74,18 @@ export const PlayerContext = createContext();
     }
     
     const seekSong = async (e) => {
-        audioRef.current.currentTime = ((e.nativeEvent.offsetX / seekBg.current.offsetWidth)*audioRef.current.duration)
+         audioRef.current.currentTime = ((e.nativeEvent.offsetX / seekBg.current.offsetWidth) * audioRef.current.duration)
     }
+     
+    const [volume, setVolume] = useState(1);
+
+    const handleVolumeChange = (e) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+    if (audioRef.current) {
+        audioRef.current.volume = newVolume;
+    }
+    };
     
     const contextValue = {
         audioRef,
@@ -85,7 +95,9 @@ export const PlayerContext = createContext();
         playStatus, setPlayStatus,
         time, setTime,
         play, pause, playWithId,
-        previous,next,seekSong
+        previous, next, seekSong,
+        setVolume, volume,
+        handleVolumeChange
     }
      
     

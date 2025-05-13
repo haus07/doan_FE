@@ -3,7 +3,7 @@ import { assets, songsData } from '../assets/assets';
 import { PlayerContext } from '../context/PlayerContext'
 const Player = () => {
 
-    const { track,seekBar, seekBg ,playStatus ,play,pause,time,previous,next,seekSong } = useContext(PlayerContext);
+    const { track,seekBar, seekBg ,playStatus ,play,pause,time,previous,next,seekSong,volume,handleVolumeChange } = useContext(PlayerContext);
 
     return (
         <div className="h-[10%] bg-black flex justify-between items-center text-white px-4">
@@ -39,9 +39,15 @@ const Player = () => {
                 <img className="w-4" src={ assets.queue_icon } alt="" />
                 <img className="w-4" src={ assets.speaker_icon } alt="" />
                 <img className="w-4" src={assets.volume_icon} alt="" />
-                <div className="w-10 bg-slate-50 h- rounded">
-
-                </div>
+                <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value={volume}
+                    onChange={handleVolumeChange}
+                    className="w-20 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:bg-slate-200 [&::-webkit-slider-thumb]:rounded-full"
+                    />
                 <img className="w-4" src={ assets.mini_player_icon } alt="" />
                 <img className="w-4" src={ assets.zoom_icon } alt="" />
             </div>

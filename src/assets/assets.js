@@ -160,7 +160,7 @@ export const albumsData = [
         name: "Best of Justin Bieber",
         image: img8,
         desc:"Justin Bieber songs",
-        bgColor:"#2a4365"
+        bgColor: "#2a4365",
     },
     {   
         id:1,

@@ -2,6 +2,7 @@ import { createContext, useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
 import { songsData } from "../assets/assets";
+import { albumsData } from "../assets/assets";
 export const PlayerContext = createContext();
 
 
@@ -12,7 +13,9 @@ export const PlayerContext = createContext();
     const seekBar = useRef();
      
     const [track, setTrack] = useState(songsData[0]);
-    const [playStatus, setPlayStatus] = useState(false);
+     const [playStatus, setPlayStatus] = useState(false);
+     const [currentAlbumId, setCurrentAlbumId] = useState(false);
+     const [currentTrackId, setCurrentTrackId] = useState(null);
     const [time,setTime] = useState({
         currentTime: {
             second: 0,
@@ -24,15 +27,40 @@ export const PlayerContext = createContext();
         }
     })
      
-    const play = () => {
-        audioRef.current.play();
-        setPlayStatus(true)
-    }
+    
      
+   const play = (id) => {
+  if (id !== currentTrackId) {
+    setCurrentTrackId(id);
+    audioRef.current.src = playWithId(id);
+  }
+  audioRef.current.play();
+  setPlayStatus(true);
+     }
+
+     const playAlbum = (id) => {
+  if (id !== currentAlbumId) {
+    setCurrentAlbumId(id);
+    audioRef.current.src = playWithAlbumId(id);
+  }
+  audioRef.current.play();
+  setPlayStatus(true);
+     }
+     
+
+
+
     const pause = () => {
-        audioRef.current.pause();
-        setPlayStatus(false);
-    }
+  audioRef.current.pause();
+  setPlayStatus(false);
+}
+     
+     const playWithAlbumId = async (albumId) => {
+        const songs = songsData.filter(song => song.album_id === albumId)
+         await setTrack(songs[0]);
+         await audioRef.current.play();
+         setPlayStatus(true);
+    } 
      
      const playWithId = async (id) => {
         await setTrack(songsData[id]);
@@ -97,7 +125,9 @@ export const PlayerContext = createContext();
         play, pause, playWithId,
         previous, next, seekSong,
         setVolume, volume,
-        handleVolumeChange
+        handleVolumeChange, currentTrackId,
+        currentAlbumId, playWithAlbumId,
+        playAlbum
     }
      
     

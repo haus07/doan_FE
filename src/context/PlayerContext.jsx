@@ -27,9 +27,12 @@ export const PlayerContext = createContext();
         }
     })
      
-    
+     const play = () => {
+        audioRef.current.play();
+  setPlayStatus(true);
+    }
      
-   const play = (id) => {
+   const playSong = (id) => {
   if (id !== currentTrackId) {
     setCurrentTrackId(id);
     audioRef.current.src = playWithId(id);
@@ -127,7 +130,7 @@ export const PlayerContext = createContext();
         setVolume, volume,
         handleVolumeChange, currentTrackId,
         currentAlbumId, playWithAlbumId,
-        playAlbum
+        playAlbum,playSong
     }
      
     

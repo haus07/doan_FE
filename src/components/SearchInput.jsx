@@ -10,8 +10,8 @@ const SearchInput = () => {
         <>
             <input
   type="text"
-  placeholder="Nhập nội dung..."
-  class="bg-gray-700 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+  placeholder="What do you want to listen to..."
+  class="bg-black text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
   value={searchQuerry}
   onChange={(e)=>setSearchQuerry(e.target.value)}
             />

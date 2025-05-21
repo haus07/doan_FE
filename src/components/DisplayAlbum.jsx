@@ -6,6 +6,7 @@ import { PlayerContext } from "../context/PlayerContext";
 import { songsData } from './../assets/assets';
 import playsIcon from "../assets/play.png";
 import musicPlaying from "../assets/hinh/musicplaying.gif"
+import { motion } from "framer-motion";
 
 const DisplayAlbum = () => {
     const { id } = useParams();
@@ -18,6 +19,13 @@ const DisplayAlbum = () => {
 
     return (
         <>
+             <motion.div
+      initial={{ opacity: 0, x: -50 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 50 }}
+      transition={{ duration: 0.5 }}
+    >
+      
             <Navbar />
             <div className="mt-10 flex gap-8 flex-col md:flex-row md:items-end">
                 <img className="w-48 rounded" src={albumData.image} alt="" />
@@ -48,16 +56,16 @@ const DisplayAlbum = () => {
                 songAlbum.map((item, index) => (
                     
                     <div
-                        key={index}
-                        onClick={() => {
-                            playWithId(item.id);
-                            setSongPlaying(item.id)
-                        }
-                        }
-                        onMouseEnter={() => setHoveredIndex(index)}
-                        onMouseLeave={() => setHoveredIndex(null)}
-                        className="grid grid-cols-3 sm:grid-cols-4 gap-2 p-2 items-center text-[#a7a7a7] hover:bg-[#ffffff2b] cursor-pointer"
-                    >
+                    key={index}
+                    onClick={() => {
+                        playWithId(item.id);
+                        setSongPlaying(item.id)
+                    }
+                }
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                className="grid grid-cols-3 sm:grid-cols-4 gap-2 p-2 items-center text-[#a7a7a7] hover:bg-[#ffffff2b] cursor-pointer"
+                >
                         <p className="text-white flex items-center gap-4 ">
                              
                             {
@@ -71,8 +79,8 @@ const DisplayAlbum = () => {
 
                             { item.id === songPlaying ? 
 
-                            ( <img className="inline w-10 relative -translate-x-8 " src={item.image} alt="" />):( <img className="inline w-10 " src={item.image} alt="" />)
-                            }
+( <img className="inline w-10 relative -translate-x-8 " src={item.image} alt="" />):( <img className="inline w-10 " src={item.image} alt="" />)
+}
                             {item.name}
                         </p>
                         <p className="text-[15px]">{albumData.name}</p>
@@ -81,6 +89,7 @@ const DisplayAlbum = () => {
                     </div>
                 ))
             }
+            </motion.div>
         </>
     )
 }

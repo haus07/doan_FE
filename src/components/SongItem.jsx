@@ -4,7 +4,7 @@ import PauseButton from "./PauseButton";
 import PlayButton from "./PlayButton";
 
 const SongItem = ({ name, image, desc, id }) => {
-    const { playStatus, play, pause, currentTrackId,playWithId } = useContext(PlayerContext)
+    const { playStatus, playSong, pause, currentTrackId,playWithId } = useContext(PlayerContext)
     const isPlaying = playStatus && currentTrackId === id;
 
   return (
@@ -28,7 +28,7 @@ const SongItem = ({ name, image, desc, id }) => {
       :
         <PlayButton onClick={(e) => {
           e.stopPropagation();
-          play(id);
+          playSong(id);
           }} className="bg-green-500 w-14 h-14 rounded-full shadow-lg flex items-center justify-center
         absolute bottom-20 right-1 opacity-0 group-hover:opacity-100
         transition-opacity duration-300" />

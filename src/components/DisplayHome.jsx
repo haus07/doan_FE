@@ -6,6 +6,7 @@ import SongItem from "./SongItem";
 import { songsData ,artist} from "../assets/assets";
 import { useEffect, useState } from "react";
 import Artist from "./Artist";
+import { motion } from 'framer-motion';
 
 const DisplayHome = () => {
      const [randomSongs, setRandomSongs] = useState([]);
@@ -16,6 +17,11 @@ const DisplayHome = () => {
   }, [songsData]);
     return (
         <>
+            <motion.div
+            initial={{ opacity: 0, x: -50 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 50 }}
+      transition={{ duration: 0.5 }}>
             <Navbar /> 
             <div className="mb-4">
                 
@@ -53,7 +59,8 @@ const DisplayHome = () => {
                     />
         ))}
       </div>
-    </div>
+                </div>
+                </motion.div>
         </>
     )
 }

@@ -1,7 +1,9 @@
 import React from "react";
 import { assets } from "../assets/assets";
 import { motion } from "framer-motion";
-import "./PremiumButton.css";
+import "./PremiumButton.css"; 
+import { Link } from 'react-router-dom';
+
 
 const Sidebar = () => {
   return (
@@ -11,10 +13,10 @@ const Sidebar = () => {
           <img className="w-6" src={assets.home_icon} alt="" />
           <p className="font-bold">Home</p>
         </div>
-        <div className="flex items-cennter gap-3 pl-8 cursor-pointer">
-          <img className="w-6" src={assets.search_icon} alt="" />
-          <p className="font-bold">Search</p>
-        </div>
+       <Link to="/search" className="flex items-center gap-3 pl-8 cursor-pointer">
+  <img className="w-6" src={assets.search_icon} alt="" />
+  <p className="font-bold">Search</p>
+</Link>
       </div>
       <div className="bg-[#121212] h-[85%] rounded">
         <div className="p-4 flex items-center justify-between">

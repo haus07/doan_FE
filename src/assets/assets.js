@@ -124,7 +124,14 @@ import song45 from  './song/adele/Love In The Dark.mp3'
 import song46 from  './song/adele/All I Ask.mp3'
 import song47 from  './song/adele/Adele - Chasing Pavements (Official Music Video).mp3'
 import song48 from  './song/adele/Adele - Skyfall (Official Lyric Video).mp3'
-import song49 from  './song/adele/Adele - When We Were Young (Live at The Church Studios).mp3'
+import song49 from './song/adele/Adele - When We Were Young (Live at The Church Studios).mp3'
+import img54 from './hinh/artist/jb.jpg'
+import img55 from './hinh/artist/ariana.jpg'
+import img56 from './hinh/artist/theweknd.jpg'
+import img57 from './hinh/artist/adele.png'
+import img58 from './hinh/artist/bruno.jpg'
+
+
 
 
 export const assets = {
@@ -655,4 +662,38 @@ export const songsData = [
 }
 
 
+]
+
+export const artist = [
+  {
+    id: 0,
+    name: "Justin Bieber",
+    role: "Artist",
+    albumId: 0,
+    img: img54
+  },{
+    id: 1,
+    name: "Adele",
+    role: "Artist",
+    albumId: 4,
+    img: img57
+  },{
+    id: 2,
+    name: "Ariana Grande",
+    role: "Artist",
+    albumId: 3,
+    img: img55
+  },{
+    id: 3,
+    name: "The Weeknd",
+    role: "Artist",
+    albumId: 1,
+    img: img56
+  },{
+    id: 4,
+    name: "Bruno Mars",
+    role: "Artist",
+    albumId: 2,
+    img: img58
+  }
 ]

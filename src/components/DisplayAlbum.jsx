@@ -53,7 +53,7 @@ const DisplayAlbum = () => {
                         <p className="text-white flex items-center gap-4">
                             {
                                 hoveredIndex === index ? (
-                                    <img src={playIcon} alt="play" className="w-7" /> 
+                                    <img src={playIcon} alt="play" className="w-7"/> 
                                 ) : (
                                     <b className="text-[#a7a7a7]">{index + 1}</b>
                                 )

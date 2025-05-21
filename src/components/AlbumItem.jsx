@@ -6,7 +6,7 @@ import PlayButton from "./PlayButton";
 import PauseButton from "./PauseButton";
 
 const AlbumItem = ({ image, name, desc, id }) => {
-  const { playStatus, play, pause, currentTrackId ,currentAlbumId,playAlbum} = useContext(PlayerContext)
+  const { playStatus,  pause,currentAlbumId,playAlbum} = useContext(PlayerContext)
   const isPlaying = playStatus && currentAlbumId === id;
   const navigate = useNavigate();
   return (

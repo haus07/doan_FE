@@ -3,11 +3,12 @@ import { assets, songsData } from '../assets/assets';
 import { PlayerContext } from '../context/PlayerContext'
 import PlayButton from "./PlayButton";
 import PauseButton from "./PauseButton";
+import { Link, useNavigate } from "react-router-dom";
 
 const Player = () => {
 
     const { track,seekBar, seekBg ,playStatus ,play,pause,time,previous,next,seekSong,volume,handleVolumeChange } = useContext(PlayerContext);
-
+    const navigate = useNavigate();
     return (
     <div className="h-[10%] bg-black flex justify-between items-center text-white px-6 border-t border-gray-800">
         {/* Left side - Track info */}
@@ -54,7 +55,8 @@ const Player = () => {
         
         {/* Right side - Volume controls */}
         <div className="hidden lg:flex items-center gap-3 flex-1 justify-end">
-            <img className="w-4 h-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer" src={assets.mic_icon} alt="" />
+            <img onClick={()=>navigate(`/showlyrics/${track.id}`)} className="w-4 h-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer" src={assets.mic_icon} alt="" />
+            
             <img className="w-4 h-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer" src={assets.queue_icon} alt="" />
             <img className="w-4 h-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer" src={assets.speaker_icon} alt="" />
             <div className="flex items-center gap-1">

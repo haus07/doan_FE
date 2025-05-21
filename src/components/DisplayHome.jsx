@@ -3,21 +3,37 @@ import Navbar from './Navbar'
 import { albumsData } from "../assets/assets";
 import AlbumItem from "./AlbumItem";
 import SongItem from "./SongItem";
-import { songsData } from "../assets/assets";
-import { useEffect,useState } from "react";
+import { songsData ,artist} from "../assets/assets";
+import { useEffect, useState } from "react";
+import Artist from "./Artist";
 
 const DisplayHome = () => {
      const [randomSongs, setRandomSongs] = useState([]);
 
   useEffect(() => {
-    // Shuffle mảng
     const shuffled = [...songsData].sort(() => Math.random() - 0.5);
-    // Lấy 10 bài đầu tiên
     setRandomSongs(shuffled.slice(0, 10));
   }, [songsData]);
     return (
         <>
             <Navbar /> 
+            <div className="mb-4">
+                
+                    <h1 className="my-5 font-bold text-2x">Popular Artists</h1>
+                
+                <div className="flex overflow-auto">
+                    {artist.map((item)=>{
+                        return (
+                            <Artist img={item.img}
+                                name={item.name}
+                                role={item.role}
+                                albumID={item.albumId}
+                                key={ item.id} />
+                                
+                        )
+                    }) }
+                </div>
+            </div>
             <div className="mb-4">
                 <h1 className="my-5 font-bold text-2x">Feature Charts</h1>
                 <div className="flex overflow-auto">

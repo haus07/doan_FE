@@ -4,15 +4,17 @@ import { albumsData, assets } from "../assets/assets";
 import { useParams } from "react-router-dom";
 import { PlayerContext } from "../context/PlayerContext";
 import { songsData } from './../assets/assets';
-import playIcon from "../assets/playbutton.png"; // 
+import playsIcon from "../assets/play.png";
+import musicPlaying from "../assets/hinh/musicplaying.gif"
 
 const DisplayAlbum = () => {
     const { id } = useParams();
     const albumData = albumsData[id];
-    const { playWithId } = useContext(PlayerContext);
+    const { playWithId} = useContext(PlayerContext);
     const songAlbum = songsData.filter(song => Number(song.album_id) === Number(id));
 
     const [hoveredIndex, setHoveredIndex] = useState(null); 
+    const [songPlaying, setSongPlaying] = useState(null);
 
     return (
         <>
@@ -42,23 +44,35 @@ const DisplayAlbum = () => {
             <hr />
 
             {
+                
                 songAlbum.map((item, index) => (
+                    
                     <div
                         key={index}
-                        onClick={() => playWithId(item.id)}
+                        onClick={() => {
+                            playWithId(item.id);
+                            setSongPlaying(item.id)
+                        }
+                        }
                         onMouseEnter={() => setHoveredIndex(index)}
                         onMouseLeave={() => setHoveredIndex(null)}
                         className="grid grid-cols-3 sm:grid-cols-4 gap-2 p-2 items-center text-[#a7a7a7] hover:bg-[#ffffff2b] cursor-pointer"
                     >
-                        <p className="text-white flex items-center gap-4">
+                        <p className="text-white flex items-center gap-4 ">
+                             
                             {
                                 hoveredIndex === index ? (
-                                    <img src={playIcon} alt="play" className="w-7"/> 
-                                ) : (
-                                    <b className="text-[#a7a7a7]">{index + 1}</b>
-                                )
+                                    
+                                    <img src={playsIcon} alt="play" className="w-5 h-5"/> 
+                                ) : item.id === songPlaying ? <img src={musicPlaying} className="w-10 h-10 relative -translate-x-8" /> :
+                                (<b className="text-[#a7a7a7]">{index + 1}</b>)
+                                
                             }
-                            <img className="inline w-10" src={item.image} alt="" />
+
+                            { item.id === songPlaying ? 
+
+                            ( <img className="inline w-10 relative -translate-x-8 " src={item.image} alt="" />):( <img className="inline w-10 " src={item.image} alt="" />)
+                            }
                             {item.name}
                         </p>
                         <p className="text-[15px]">{albumData.name}</p>

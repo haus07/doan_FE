@@ -4,7 +4,7 @@ import { albumsData, assets } from "../assets/assets";
 import { useParams } from "react-router-dom";
 import { PlayerContext } from "../context/PlayerContext";
 import { songsData } from './../assets/assets';
-import playIcon from "../assets/8212668.png"; // 
+import playIcon from "../assets/playbutton.png"; // 
 
 const DisplayAlbum = () => {
     const { id } = useParams();

@@ -15,7 +15,7 @@ export const PlayerContext = createContext();
     const [track, setTrack] = useState(songsData[0]);
      const [playStatus, setPlayStatus] = useState(false);
      const [currentAlbumId, setCurrentAlbumId] = useState(false);
-     const [currentTrackId, setCurrentTrackId] = useState(null);
+     const [currentTrackId, setCurrentTrackId] = useState(0);
     const [time,setTime] = useState({
         currentTime: {
             second: 0,
@@ -128,7 +128,7 @@ export const PlayerContext = createContext();
         play, pause, playWithId,
         previous, next, seekSong,
         setVolume, volume,
-        handleVolumeChange, currentTrackId,
+        handleVolumeChange, currentTrackId,setCurrentTrackId,
         currentAlbumId, playWithAlbumId,
         playAlbum,playSong
     }

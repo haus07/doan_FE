@@ -3,6 +3,7 @@ import Sidebar from './components/Sidebar'
 import Player from "./components/Player"
 import Display from "./components/Display"
 import { PlayerContext } from './context/PlayerContext'
+import Queue from "./components/Queue"
 
 
 function App() {
@@ -13,7 +14,8 @@ function App() {
     <div className='h-screen bg-black'>
       <div className="h-[90%] flex">
         <Sidebar />
-        <Display/>
+        <Display />
+        <Queue/>
       </div>
       <Player />
       <audio ref={audioRef} src={ track.file } preload="auto"></audio>

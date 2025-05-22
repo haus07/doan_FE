@@ -9,7 +9,7 @@ const SearchContent = ({searchQuerry}) => {
   hidden: {},
   show: {
     transition: {
-      staggerChildren: 0.05, // thời gian delay giữa các item
+      staggerChildren: 0.05, 
     },
   },
 };
@@ -26,7 +26,7 @@ return (
     animate="show"
     className="flex flex-col gap-y-2 w-full px-6 py-4 bg-neutral-900"
   >
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
       {songsData.map(
         (itemData, index) =>
           itemData.name.toLowerCase().startsWith(searchQuerry) && (

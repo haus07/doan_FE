@@ -130,7 +130,7 @@ import img55 from './hinh/artist/ariana.jpg'
 import img56 from './hinh/artist/theweknd.jpg'
 import img57 from './hinh/artist/adele.png'
 import img58 from './hinh/artist/bruno.jpg'
-import logo from './hinh/intro/logo.png'
+
 
 
 

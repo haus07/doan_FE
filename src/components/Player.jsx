@@ -49,7 +49,7 @@ const Player = () => {
                         <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-lg opacity-0 group-hover:opacity-100"></div>
                     </div>
                 </div>
-                <p className="text-xs text-gray-400 w-10">{time.totalTime.minute}:{time.totalTime.second<10?"0"+time.currentTime.second:time.currentTime.second}</p>
+                <p className="text-xs text-gray-400 w-10">{time.totalTime.minute}:{time.totalTime.second<10?"0"+time.totalTime.second:time.totalTime.second}</p>
             </div>
         </div>
         

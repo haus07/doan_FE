@@ -18,7 +18,6 @@ const Intro = ({ onFinish }) => {
 
   <motion.img
     src={logo}
-    alt="Spotify Logo"
     className="w-60 md:w-80 lg:w-96 object-contain drop-shadow-[0_0_15px_rgba(30,215,96,0.6)]"
     initial={{ opacity: 0, scale: 0.8, y: 50 }}
     animate={{ opacity: 1, scale: 1, y: 0 }}

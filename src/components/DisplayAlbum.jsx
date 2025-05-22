@@ -7,6 +7,8 @@ import { songsData } from './../assets/assets';
 import playsIcon from "../assets/play.png";
 import musicPlaying from "../assets/hinh/musicplaying.gif"
 import { motion } from "framer-motion";
+import { space } from "postcss/lib/list";
+import { span } from "framer-motion/client";
 
 const DisplayAlbum = () => {
     const { id } = useParams();
@@ -80,8 +82,11 @@ const DisplayAlbum = () => {
                             { item.id === songPlaying ? 
 
 ( <img className="inline w-10 relative -translate-x-8 " src={item.image} alt="" />):( <img className="inline w-10 " src={item.image} alt="" />)
-}
-                            {item.name}
+                            }
+                            {item.id === songPlaying?
+                                <span className="-translate-x-8">{item.name}</span> :
+                                <span>{item.name }</span>
+                            }               
                         </p>
                         <p className="text-[15px]">{albumData.name}</p>
                         <p className="text-[15px] hidden sm:block">5 days ago</p>

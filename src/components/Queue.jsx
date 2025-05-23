@@ -2,6 +2,7 @@ import React from "react";
 import { PlayerContext } from '../context/PlayerContext'
 import { useContext, useEffect, useState } from "react";
 import { songsData } from "../assets/assets";
+import {motion} from "framer-motion"
 
 
 
@@ -23,20 +24,33 @@ const Queue = () => {
       <h1 className="text-xl font-bold">Queue</h1>
     </div>
 
-    <div className="px-6 pt-4">
-      <h2 className="text-sm text-zinc-400 mb-2">Now Playing</h2>
-      <div className="bg-zinc-800/50 rounded-lg p-4">
-        <img
-          className="w-full h-auto rounded-lg object-cover mb-3"
-          src={track.image}
-          alt="track cover"
-        />
-        <div>
-          <p className="text-base font-medium text-white truncate mb-1">{track.name}</p>
-          <p className="text-sm text-zinc-400 truncate">{track.desc}</p>
-        </div>
-      </div>
-    </div>
+     {track && (
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="px-6 pt-5 pb-4"
+                >
+                    <h2 className="text-sm text-zinc-400 mb-3 font-medium">Now Playing</h2>
+                    <div className="bg-gradient-to-br from-zinc-800/60 to-zinc-900/60 rounded-xl p-4 border border-zinc-700/30 backdrop-blur-sm">
+                        <div className="relative group">
+                            <img
+                                className="w-full h-auto rounded-lg object-cover mb-3 shadow-lg transition-transform duration-300 group-hover:scale-105"
+                                src={track.image}
+                                alt={track.name}
+                            />
+                           
+                        </div>
+                        <div>
+                            <p className="text-base font-semibold text-white truncate mb-1">{track.name}</p>
+                            <p className="text-sm text-zinc-400 truncate">{track.desc}</p>
+                            <div className="flex items-center justify-between mt-2 text-xs text-zinc-500">
+                                <span>{track.duration}</span>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
+            )}
 
     <div className="flex-1 overflow-y-auto mt-4">
       <div className="px-6">

@@ -24,65 +24,68 @@ const DisplayHome = () => {
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, x: -20 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
-      x: 0,
+      y: 0,
       transition: { duration: 0.4, ease: "easeOut" },
     },
   };
 
+  const madeForYouItems = [
+    {
+      title: "Discover Weekly",
+      desc: "Your weekly mixtape of fresh music",
+      from: "from-purple-600",
+      to: "to-purple-800",
+    },
+    {
+      title: "Release Radar",
+      desc: "New releases from your favorite artists",
+      from: "from-green-600",
+      to: "to-green-800",
+    },
+    {
+      title: "Daily Mix",
+      desc: "Perfect blend of your favorites",
+      from: "from-blue-600",
+      to: "to-blue-800",
+    },
+  ];
+
   return (
     <motion.div
-      initial={{ opacity: 0, x: -50 }}
+      initial={{ opacity: 0, x: -40 }}
       animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 50 }}
+      exit={{ opacity: 0, x: 40 }}
       transition={{ duration: 0.5 }}
-      className="p-6 text-white"
+      className="p-6 text-white space-y-12"
     >
       <Navbar />
 
-      <section className="mb-10">
+      <section>
         <h1 className="text-2xl font-bold mb-4">Popular Artists</h1>
-        <div className="flex overflow-x-auto gap-4">
+        <div className="flex overflow-x-auto gap-5">
           {artist.map((item) => (
-            <Artist
-              key={item.id}
-              img={item.img}
-              name={item.name}
-              role={item.role}
-              albumID={item.albumId}
-            />
+            <Artist key={item.id} {...item} />
           ))}
         </div>
       </section>
 
-      <section className="mb-10">
+      <section>
         <h1 className="text-2xl font-bold mb-4">Feature Charts</h1>
-        <div className="flex overflow-x-auto gap-4">
+        <div className="flex overflow-x-auto gap-5">
           {albumsData.map((item, index) => (
-            <AlbumItem
-              key={index}
-              name={item.name}
-              desc={item.desc}
-              id={item.id}
-              image={item.image}
-            />
+            <AlbumItem key={index} {...item} />
           ))}
         </div>
       </section>
 
-      <section className="mb-10">
+      <section>
         <h1 className="text-2xl font-bold mb-4">Today's Biggest Hits</h1>
-        <div className="flex overflow-x-auto gap-4">
+        <div className="flex overflow-x-auto gap-5">
           {randomSongs.map((item, index) => (
-            <SongItem
-              key={item.id || index}
-              name={item.name}
-              desc={item.desc}
-              id={item.id}
-              image={item.image}
-            />
+            <SongItem key={item.id || index} {...item} />
           ))}
         </div>
       </section>
@@ -94,37 +97,17 @@ const DisplayHome = () => {
         className="space-y-6"
       >
         <h2 className="text-2xl md:text-3xl font-bold">Made For You</h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <motion.div
-            variants={itemVariants}
-            className="bg-gradient-to-br from-purple-600 to-purple-800 p-6 rounded-xl hover:scale-105 transition duration-300 cursor-pointer"
-          >
-            <h3 className="text-lg font-bold mb-1">Discover Weekly</h3>
-            <p className="text-sm text-purple-100 opacity-90">
-              Your weekly mixtape of fresh music
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={itemVariants}
-            className="bg-gradient-to-br from-green-600 to-green-800 p-6 rounded-xl hover:scale-105 transition duration-300 cursor-pointer"
-          >
-            <h3 className="text-lg font-bold mb-1">Release Radar</h3>
-            <p className="text-sm text-green-100 opacity-90">
-              New releases from your favorite artists
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={itemVariants}
-            className="bg-gradient-to-br from-blue-600 to-blue-800 p-6 rounded-xl hover:scale-105 transition duration-300 cursor-pointer"
-          >
-            <h3 className="text-lg font-bold mb-1">Daily Mix</h3>
-            <p className="text-sm text-blue-100 opacity-90">
-              Perfect blend of your favorites
-            </p>
-          </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {madeForYouItems.map((item, index) => (
+            <motion.div
+              key={index}
+              variants={itemVariants}
+              className={`bg-gradient-to-br ${item.from} ${item.to} p-6 rounded-2xl hover:scale-[1.03] hover:shadow-xl transition-all duration-300 cursor-pointer`}
+            >
+              <h3 className="text-lg font-semibold mb-1">{item.title}</h3>
+              <p className="text-sm text-white opacity-80">{item.desc}</p>
+            </motion.div>
+          ))}
         </div>
       </motion.section>
     </motion.div>

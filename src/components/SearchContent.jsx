@@ -3,47 +3,66 @@ import { songsData } from "../assets/assets";
 import SongItem from "./SongItem";
 import { motion } from "framer-motion";
 
-
-const SearchContent = ({searchQuerry}) => {
-   const container = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.05, 
+const SearchContent = ({ searchQuerry }) => {
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.1,
+      },
     },
-  },
-};
+  };
 
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 },
-};
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.4,
+        ease: "easeOut",
+      },
+    },
+  };
 
-return (
-  <motion.div
-    variants={container}
-    initial="hidden"
-    animate="show"
-    className="flex flex-col gap-y-2 w-full px-6 py-4 bg-neutral-900"
-  >
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
-      {songsData.map(
-        (itemData, index) =>
-          itemData.name.toLowerCase().startsWith(searchQuerry) && (
-            <motion.div variants={item} key={itemData.id || index}>
+  const filteredSongs = songsData.filter((item) =>
+    item.name.toLowerCase().includes(searchQuerry.toLowerCase())
+  );
+
+  return (
+    <motion.div
+      className="w-full px-6 py-6 min-h-screen "
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+    >
+      <h2 className="text-2xl font-bold mb-6 ">
+        Search Results
+      </h2>
+
+      {filteredSongs.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {filteredSongs.map((item, index) => (
+            <motion.div key={item.id || index} variants={itemVariants}>
               <SongItem
-                name={itemData.name}
-                desc={itemData.desc}
-                id={itemData.id}
-                image={itemData.image}
+                name={item.name}
+                desc={item.desc}
+                id={item.id}
+                image={item.image}
               />
             </motion.div>
-          )
+          ))}
+        </div>
+      ) : (
+        <p className="text-gray-400">
+          No songs found for{" "}
+          <span className="text-[#38bdf8] font-semibold">
+            "{searchQuerry}"
+          </span>
+        </p>
       )}
-    </div>
-  </motion.div>
-);
+    </motion.div>
+  );
+};
 
-}
-
-export default SearchContent
+export default SearchContent;

@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 const Intro = ({ onFinish }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
-      onFinish(); // chạy callback sau 3 giây
+      onFinish();
     }, 3000);
     return () => clearTimeout(timer);
   }, [onFinish]);

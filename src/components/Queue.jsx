@@ -7,13 +7,15 @@ import { songsData } from "../assets/assets";
 
 const Queue = () => {
 
-    const { track ,playStatus ,setCurrentTrackId,currentTrackId} = useContext(PlayerContext);
+    const { track ,playStatus ,setCurrentTrackId,currentTrackId,playWithId} = useContext(PlayerContext);
      const [randomSongs, setRandomSongs] = useState([]);
+    
     
        useEffect(() => {
     const shuffled = [...songsData].sort(() => Math.random() - 0.5);
+    
     setRandomSongs(shuffled.slice(0, 10));
-  }, [songsData, track.id]);
+  }, [ track.id]);
     
    return (
   <div className="w-full lg:w-80 bg-[#121212] text-white flex flex-col rounded-lg overflow-hidden h-[90vh]">
@@ -44,15 +46,15 @@ const Queue = () => {
                <div className="px-6 pb-6 space-y-1">
                    
                    
-                   {(currentTrackId === 0||currentTrackId===track.id)&&randomSongs.map((item, index) => (
+                   {randomSongs.map((item, index) => (
           <div 
             key={index}
             className="flex items-center gap-3 p-2 rounded-md hover:bg-zinc-800/50 transition-colors duration-200 cursor-pointer group"
+            onClick={()=>playWithId(item.id)}       
           >
             <img
               className="w-10 h-10 rounded object-cover shadow"
               src={item.image}
-              alt="track"
             />
             <div className="min-w-0 flex-1">
               <p className="text-sm font-medium truncate group-hover:text-white">

@@ -66,8 +66,16 @@ const DisplayHome = () => {
       <section>
         <h1 className="text-2xl font-bold mb-4">Popular Artists</h1>
         <div className="flex overflow-x-auto gap-5">
-          {artist.map((item) => (
-            <Artist key={item.id} {...item} />
+          {
+            artist.map((item) => (
+            <Artist
+                                id={item.id}
+                                img={item.img}
+                                name={item.name}
+                                role={item.role}
+                albumID={item.albumId}
+                key={item.id}
+                                />
           ))}
         </div>
       </section>
@@ -76,7 +84,7 @@ const DisplayHome = () => {
         <h1 className="text-2xl font-bold mb-4">Feature Charts</h1>
         <div className="flex overflow-x-auto gap-5">
           {albumsData.map((item, index) => (
-            <AlbumItem key={index} {...item} />
+            <AlbumItem key={index} name={item.name} desc={item.desc} id={item.id} image={item.image} />
           ))}
         </div>
       </section>
@@ -85,7 +93,11 @@ const DisplayHome = () => {
         <h1 className="text-2xl font-bold mb-4">Today's Biggest Hits</h1>
         <div className="flex overflow-x-auto gap-5">
           {randomSongs.map((item, index) => (
-            <SongItem key={item.id || index} {...item} />
+            <SongItem key={item.id || index}
+                        name={item.name}
+                        desc={item.desc}
+                        id={item.id}
+                        image={item.image}/>
           ))}
         </div>
       </section>

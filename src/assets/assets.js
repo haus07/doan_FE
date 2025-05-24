@@ -130,9 +130,53 @@ import img55 from './hinh/artist/ariana.jpg'
 import img56 from './hinh/artist/theweknd.jpg'
 import img57 from './hinh/artist/adele.png'
 import img58 from './hinh/artist/bruno.jpg'
+import img59 from './hinh/artistDetail/Jbdetail.jpg'
+import img60 from './hinh/artistDetail/Adeledetail.jpg'
+import img61 from './hinh/artistDetail/TWdetail.jpg'
+import img62 from './hinh/artistDetail/arianagrandeDetail.jpg'
+import img63 from './hinh/artistDetail/brunoMars.jpg';
 
 
 
+export const artist = [
+  {
+    id: 0,
+    name: "Justin Bieber",
+    role: "Artist",
+    albumId: 0,
+    img: img54,
+    imgDetail:img59
+  },{
+    id: 1,
+    name: "Adele",
+    role: "Artist",
+    albumId: 1,
+    img: img57,
+    imgDetail:img60
+  },{
+    id: 2,
+    name: "Ariana Grande",
+    role: "Artist",
+    albumId: 2,
+    img: img55,
+    imgDetail:img62
+  },{
+    id: 3,
+    name: "The Weeknd",
+    role: "Artist",
+    albumId: 3,
+    img: img56,
+    imgDetail:img61
+
+  },{
+    id: 4,
+    name: "Bruno Mars",
+    role: "Artist",
+    albumId: 4,
+    img: img58,
+    imgDetail:img63
+  }
+]
 
 
 export const assets = {
@@ -172,32 +216,32 @@ export const albumsData = [
         bgColor: "#2a4365",
     },
     {   
-        id:1,
+      id:1,
+      name: "Adele",
+      image: img11,
+      desc:"Adele songs",
+      bgColor:"#234e52"
+    },
+    {   
+      id:2,
+      name: "Ariana the Grande",
+      image: img16,
+      desc:"Your weekly update of the most played tracks",
+      bgColor:"#0B0B0B"
+    },
+    {   
+        id:3,
         name: "The Weknd",
         image: img9,
         desc:"The Weknd songs",
         bgColor:"#FF5733"
     },
     {   
-        id:2,
+        id:4,
         name: "Bruno Mars",
         image: img10,
-        desc:"Your weekly update of the most played tracks",
+        desc:"Bruno Mars songs",
         bgColor:"#FFC300"
-    },
-    {   
-        id:3,
-        name: "Ariana the Grande",
-        image: img16,
-        desc:"Your weekly update of the most played tracks",
-        bgColor:"#0B0B0B"
-    },
-    {   
-        id:4,
-        name: "Adele",
-        image: img11,
-        desc:"Your weekly update of the most played tracks",
-        bgColor:"#234e52"
     },
     {   
         id:5,
@@ -307,7 +351,7 @@ export const songsData = [
   file: song10,
   desc: "Synthwave hit from After Hours",
   duration: "3:20",
-  album_id: 1
+  album_id: 3,
 },
 {
   id: 11,
@@ -316,7 +360,7 @@ export const songsData = [
   file: song11,
   desc: "Retro pop from After Hours",
   duration: "3:35",
-  album_id: 1
+  album_id: 3
 },
 {
   id: 12,
@@ -325,7 +369,7 @@ export const songsData = [
   file: song12,
   desc: "Saxophone-driven 80s style",
   duration: "3:58",
-  album_id: 1
+  album_id: 3
 },
 {
   id: 13,
@@ -334,7 +378,7 @@ export const songsData = [
   file: song13,
   desc: "Dark trap production",
   duration: "3:18",
-  album_id: 1
+  album_id: 3
 },
 {
   id: 14,
@@ -343,7 +387,7 @@ export const songsData = [
   file: song14,
   desc: "Introspective and moody track",
   duration: "4:43",
-  album_id: 1
+  album_id: 3
 },
 {
   id: 15,
@@ -352,7 +396,7 @@ export const songsData = [
   file: song15,
   desc: "Opening track from After Hours",
   duration: "4:10",
-  album_id: 1
+  album_id: 3
 },
 {
   id: 16,
@@ -361,7 +405,7 @@ export const songsData = [
   file: song16,
   desc: "Electronic groove with dark lyrics",
   duration: "3:59",
-  album_id: 1
+  album_id: 3
 },
 {
   id: 17,
@@ -370,7 +414,7 @@ export const songsData = [
   file: song17,
   desc: "Reflective and biographical lyrics",
   duration: "4:07",
-  album_id: 1
+  album_id: 3
 },
 {
   id: 18,
@@ -379,7 +423,7 @@ export const songsData = [
   file: song18,
   desc: "Slow, atmospheric R&B",
   duration: "5:55",
-  album_id: 1
+  album_id: 3
 },
 {
   id: 19,
@@ -388,7 +432,7 @@ export const songsData = [
   file: song19,
   desc: "Emotional album closer",
   duration: "3:11",
-  album_id: 1
+  album_id: 3
 }
 ,
   {
@@ -398,7 +442,7 @@ export const songsData = [
   file: song20,
   desc: "Smooth R&B vibe from Bruno Mars and Anderson .Paak",
   duration: "4:02",
-  album_id: 2,
+  album_id: 4,
 },
 {
   id: 21,
@@ -407,7 +451,7 @@ export const songsData = [
   file: song21,
   desc: "Romantic ballad by Bruno Mars",
   duration: "3:37",
-  album_id: 2,
+  album_id: 4,
 },
 {
   id: 22,
@@ -416,7 +460,7 @@ export const songsData = [
   file: song22,
   desc: "A classic love song by Bruno Mars",
   duration: "3:40",
-  album_id: 2,
+  album_id: 4,
 },
 {
   id: 23,
@@ -425,7 +469,7 @@ export const songsData = [
   file: song23,
   desc: "Emotional song with deep lyrics",
   duration: "3:42",
-  album_id: 2,
+  album_id: 4,
 },
 {
   id: 24,
@@ -434,7 +478,7 @@ export const songsData = [
   file: song24,
   desc: "Upbeat and funky hit by Bruno Mars and Mark Ronson",
   duration: "4:30",
-  album_id: 2,
+  album_id: 4,
 },
 {
   id: 25,
@@ -443,7 +487,7 @@ export const songsData = [
   file: song25,
   desc: "A smooth throwback vibe with Cardi B",
   duration: "3:10",
-  album_id: 2,
+  album_id: 4,
 },
 {
   id: 26,
@@ -452,7 +496,7 @@ export const songsData = [
   file: song26,
   desc: "Romantic slow jam from Bruno Mars",
   duration: "4:21",
-  album_id: 2,
+  album_id: 4,
 },
 {
   id: 27,
@@ -461,7 +505,7 @@ export const songsData = [
   file: song27,
   desc: "Party anthem with a funky vibe",
   duration: "3:46",
-  album_id: 2,
+  album_id: 4,
 },
 {
   id: 28,
@@ -470,7 +514,7 @@ export const songsData = [
   file: song28,
   desc: "Heartwarming song about friendship",
   duration: "3:17",
-  album_id: 2,
+  album_id: 4,
 },
 {
   id: 29,
@@ -479,7 +523,7 @@ export const songsData = [
   file: song29,
   desc: "Emotional ballad about lost love",
   duration: "3:33",
-  album_id: 2,
+  album_id: 4,
 },
    {
   id: 30,
@@ -488,7 +532,7 @@ export const songsData = [
   file: song30,
   desc: "Electropop track with seductive lyrics",
   duration: "4:04",
-  album_id: 3,
+  album_id: 2,
 },
 {
   id: 31,
@@ -497,7 +541,7 @@ export const songsData = [
   file: song31,
   desc: "Uplifting anthem about resilience",
   duration: "3:25",
-  album_id: 3,
+  album_id: 2,
 },
 {
   id: 32,
@@ -506,7 +550,7 @@ export const songsData = [
   file: song32,
   desc: "Trap-pop track inspired by luxury and friendship",
   duration: "2:58",
-  album_id: 3,
+  album_id: 2,
 },
 {
   id: 33,
@@ -515,7 +559,7 @@ export const songsData = [
   file: song33,
   desc: "Empowering breakup anthem",
   duration: "3:27",
-  album_id: 3,
+  album_id: 2,
 },
 {
   id: 34,
@@ -524,7 +568,7 @@ export const songsData = [
   file: song34,
   desc: "R&B-influenced pop about love and commitment",
   duration: "2:52",
-  album_id: 3,
+  album_id: 2,
 },
 {
   id: 35,
@@ -533,7 +577,7 @@ export const songsData = [
   file: song35,
   desc: "Blending trap and R&B with powerful vocals",
   duration: "3:17",
-  album_id: 3,
+  album_id: 2,
 },
 {
   id: 36,
@@ -542,7 +586,7 @@ export const songsData = [
   file: song36,
   desc: "Sultry pop-rock anthem of empowerment",
   duration: "3:55",
-  album_id: 3,
+  album_id: 2,
 },
 {
   id: 37,
@@ -551,7 +595,7 @@ export const songsData = [
   file: song37,
   desc: "EDM-pop track celebrating freedom",
   duration: "3:34",
-  album_id: 3,
+  album_id: 2,
 },
 {
   id: 38,
@@ -560,7 +604,7 @@ export const songsData = [
   file: song38,
   desc: "Saxophone-heavy breakup banger",
   duration: "3:14",
-  album_id: 3,
+  album_id: 2,
 },
 {
   id: 39,
@@ -569,7 +613,7 @@ export const songsData = [
   file: song39,
   desc: "Moody synth-pop duet",
   duration: "3:56",
-  album_id: 3,
+  album_id: 2,
 }
 ,
 {
@@ -579,7 +623,7 @@ export const songsData = [
   file: song40,
   desc: "Emotional ballad about reconnection",
   duration: "4:55",
-  album_id: 4,
+  album_id: 1,
 },
 {
   id: 41,
@@ -588,7 +632,7 @@ export const songsData = [
   file: song41,
   desc: "Heartfelt track about lost love",
   duration: "4:45",
-  album_id: 4,
+  album_id: 1,
 },
 {
   id: 42,
@@ -597,7 +641,7 @@ export const songsData = [
   file: song42,
   desc: "Powerful anthem of heartbreak and revenge",
   duration: "3:48",
-  album_id: 4,
+  album_id: 1,
 },
 {
   id: 43,
@@ -606,7 +650,7 @@ export const songsData = [
   file: song43,
   desc: "Dramatic song about emotional release",
   duration: "4:02",
-  album_id: 4,
+  album_id: 1,
 },
 {
   id: 44,
@@ -615,7 +659,7 @@ export const songsData = [
   file: song44,
   desc: "Reflective ballad asking for understanding",
   duration: "3:44",
-  album_id: 4,
+  album_id: 1,
 },
 {
   id: 45,
@@ -624,7 +668,7 @@ export const songsData = [
   file: song49,
   desc: "Nostalgic ballad reflecting on youth",
   duration: "4:50",
-  album_id: 4,
+  album_id: 1,
 },
 {
   id: 46,
@@ -633,7 +677,7 @@ export const songsData = [
   file: song45,
   desc: "Melancholic goodbye to a fading love",
   duration: "4:46",
-  album_id: 4,
+  album_id: 1,
 },
 {
   id: 47,
@@ -642,7 +686,7 @@ export const songsData = [
   file: song46,
   desc: "Plea for one last moment of love",
   duration: "4:31",
-  album_id: 4,
+  album_id: 1,
 },
 {
   id: 48,
@@ -651,7 +695,7 @@ export const songsData = [
   file: song47,
   desc: "Questioning whether to keep fighting for love",
   duration: "3:30",
-  album_id: 4,
+  album_id: 1,
 },
 {
   id: 49,
@@ -660,42 +704,8 @@ export const songsData = [
   file: song48,
   desc: "James Bond theme with cinematic power",
   duration: "4:46",
-  album_id: 4,
+  album_id: 1,
 }
 
 
-]
-
-export const artist = [
-  {
-    id: 0,
-    name: "Justin Bieber",
-    role: "Artist",
-    albumId: 0,
-    img: img54
-  },{
-    id: 1,
-    name: "Adele",
-    role: "Artist",
-    albumId: 4,
-    img: img57
-  },{
-    id: 2,
-    name: "Ariana Grande",
-    role: "Artist",
-    albumId: 3,
-    img: img55
-  },{
-    id: 3,
-    name: "The Weeknd",
-    role: "Artist",
-    albumId: 1,
-    img: img56
-  },{
-    id: 4,
-    name: "Bruno Mars",
-    role: "Artist",
-    albumId: 2,
-    img: img58
-  }
 ]

@@ -5,6 +5,7 @@ import Display from "./components/Display"
 import { PlayerContext } from './context/PlayerContext'
 import Queue from "./components/Queue"
 import Intro from "./components/Intro"
+import DisplayArtist from "./components/DisplayArtist"
 
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
             <Queue />
           </div>
           <Player />
-          <audio ref={audioRef} src={track.file} preload="auto"></audio>
+          <audio ref={audioRef} src={track.file} preload="auto"></audio>  
         </div>)
       }
     </>

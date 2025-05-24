@@ -2,15 +2,14 @@ import React from "react"
 import { useNavigate } from "react-router-dom";
 
 
-function Artist({ img, name, role ,albumID}) {
-      const navigate = useNavigate();
+function Artist({id, img, name, role ,albumID}) {
+    const navigate = useNavigate();
     
     return (
         <div
-            onClick={() => navigate(`/album/${albumID}`)}
+            onClick={() => navigate(`/artist/${id}`)}
             className="group relative min-w-[180px] p-2 px-3 rounded hover:bg-[#ffffff26] cursor-pointer"    
         >
-            { console.log(albumID)}
             <div>
                 <img className="rounded w-full" src={img} alt="" />
             </div>

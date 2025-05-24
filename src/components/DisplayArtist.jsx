@@ -79,7 +79,7 @@ ${artistDetail.name} is a US/UK pop singer known for their dreamy melodies and n
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.7 }}
             >
-              12,796,163 monthly listeners
+              7,777,777 monthly listeners
             </motion.p>
           </div>
         </div>

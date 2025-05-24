@@ -118,6 +118,46 @@ export const PlayerContext = createContext();
     }
     };
     
+useEffect(() => {
+  if (!audioRef.current) return;
+
+  audioRef.current.src = track.file;
+
+  if (playStatus) {
+    audioRef.current.play().catch(err => console.log("Play error:", err));
+  } else {
+    audioRef.current.pause();
+  }
+}, [track, playStatus]);
+
+const autoNext = async () => {
+  const currentIndex = songsData.findIndex(song => Number(song.id) === Number(track.id));
+  if (currentIndex !== -1) {
+    if (currentIndex < songsData.length - 1) {
+      const nextTrack = songsData[currentIndex + 1];
+      setTrack(nextTrack);
+      setCurrentTrackId(nextTrack.id);
+      setPlayStatus(true);
+    } else {
+      setPlayStatus(false);
+    }
+  }
+};
+useEffect(() => {
+  if (!audioRef.current) return;
+
+  const handleEnded = () => {
+    autoNext();
+  };
+
+  audioRef.current.addEventListener("ended", handleEnded);
+
+  return () => {
+    audioRef.current.removeEventListener("ended", handleEnded);
+  };
+}, [track]);
+
+    
     const contextValue = {
         audioRef,
         seekBg,

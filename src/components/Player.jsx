@@ -11,7 +11,6 @@ const Player = () => {
     const navigate = useNavigate();
     return (
     <div className="h-[10%] bg-black flex justify-between items-center text-white px-6 border-t border-gray-800">
-        {/* Left side - Track info */}
         <div className="hidden lg:flex items-center gap-4 flex-1 min-w-0">
             <img className="w-14 h-14 rounded shadow-md" src={track.image} alt="" />
             <div className="overflow-hidden">
@@ -20,7 +19,6 @@ const Player = () => {
             </div>
         </div>
         
-        {/* Center - Player controls */}
         <div className="flex flex-col items-center gap-2 flex-1 max-w-xl">
             <div className="flex items-center gap-6">
                 <img className="w-5 h-5 opacity-70 hover:opacity-100 transition-opacity cursor-pointer" src={assets.shuffle_icon} alt="" />
@@ -53,7 +51,6 @@ const Player = () => {
             </div>
         </div>
         
-        {/* Right side - Volume controls */}
         <div className="hidden lg:flex items-center gap-3 flex-1 justify-end">
             <img onClick={()=>navigate(`/showlyrics/${track.id}`)} className="w-4 h-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer" src={assets.mic_icon} alt="" />
             

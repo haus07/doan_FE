@@ -2,15 +2,17 @@ import React, { useContext } from "react";
 import { PlayerContext } from "../context/PlayerContext";
 import PauseButton from "./PauseButton";
 import PlayButton from "./PlayButton";
+import { useNavigate } from "react-router-dom";
 
 const SongItem = ({ name, image, desc, id }) => {
     const { playStatus, playSong, pause, currentTrackId,playWithId } = useContext(PlayerContext)
     const isPlaying = playStatus && currentTrackId === id;
+  const navigate = useNavigate();
 
   return (
     <div
-      onClick={() => playWithId(id)}
       className="group relative min-w-[180px] p-2 px-3 rounded cursor-pointer hover:bg-[#ffffff26]"
+      onClick={()=>navigate(`/song/${id}`)}
     >
       <img className="rounded w-full" src={image} alt={name} />
 

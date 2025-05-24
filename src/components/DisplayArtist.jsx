@@ -27,7 +27,7 @@ ${artistDetail.name} is a US/UK pop singer known for their dreamy melodies and n
   Formed in the world, the singer has captured hearts across world with their unique blend 
   of  pop and contemporary world music. Their songs often explore themes of love, 
   youth, and the passage of time, resonating deeply with young world audiences.`
-    const description2= ` With hits like ${songAlbum[0]} and ${songAlbum[7]}, Chillies has established themselves as one of 
+    const description2= ` With hits like ${songAlbum[0].name} and ${songAlbum[7].name}, Chillies has established themselves as one of 
                 the leading voices in world music scene. Their music videos are known for their 
                 cinematic quality and emotional storytelling, often featuring beautiful world landscapes 
                 and urban settings.`

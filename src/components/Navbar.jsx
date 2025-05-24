@@ -9,9 +9,7 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Thanh điều hướng chính */}
       <div className="w-full flex justify-between items-center font-semibold">
-        {/* Nút điều hướng trái/phải */}
         <div className="flex items-center gap-3">
           <img
             onClick={() => navigate(-1)}
@@ -27,9 +25,7 @@ const Navbar = () => {
           />
         </div>
 
-        {/* Nút Premium + Install App */}
         <div className="flex items-center gap-4">
-          {/* Nút Premium với hiệu ứng vệt sáng */}
           <motion.div
             whileHover={{
               scale: 1.06,
@@ -43,26 +39,22 @@ const Navbar = () => {
             </p>
           </motion.div>
 
-          {/* Nút Install App */}
           <p className="bg-black py-1 px-3 rounded-full text-sm cursor-pointer hover:bg-gray-800 transition-all">
             Install App
           </p>
 
-          {/* Avatar placeholder */}
           <div className="bg-purple-500 text-white w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold cursor-pointer">
             ?
           </div>
         </div>
       </div>
 
-      {/* Tabs: All / Music / Podcasts */}
       <div className="flex items-center gap-3 mt-4 text-sm">
         {["All", "Music", "Podcasts"].map((item, index) => (
           <p
             key={index}
-            className={`px-4 py-1 rounded-full cursor-pointer transition-all ${
-              index === 0 ? "bg-white text-black" : "bg-black text-white hover:bg-gray-800"
-            }`}
+            className={`px-4 py-1 rounded-full cursor-pointer transition-all ${index === 0 ? "bg-white text-black" : "bg-black text-white hover:bg-gray-800"
+              }`}
           >
             {item}
           </p>

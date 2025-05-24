@@ -13,7 +13,8 @@ import PauseButton from "./PauseButton";
 const DisplayAlbum = () => {
     const { id } = useParams();
     const albumData = albumsData[id];
-    const { playWithId, currentSong , pause,playWithAlbumId,currentAlbumId ,playStatus} = useContext(PlayerContext);
+    const { playWithId, currentSong, pause, playWithAlbumId, currentAlbumId, playStatus } = useContext(PlayerContext); 
+       const [songPlaying, setSongPlaying] = useState(null);
     const songAlbum = songsData.filter(song => Number(song.album_id) === Number(id));
 
     const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -123,7 +124,11 @@ const DisplayAlbum = () => {
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.3, delay: index * 0.05 }}
-                            onClick={() => playWithId(item.id)}
+                            onClick={() => {
+                                playWithId(item.id),
+                                setSongPlaying(item.id)
+                            }
+                            }
                             onMouseEnter={() => setHoveredIndex(index)}
                             onMouseLeave={() => setHoveredIndex(null)}
                             className={`grid grid-cols-4 gap-4 p-3 rounded-lg cursor-pointer transition-all duration-200 group ${
@@ -136,7 +141,7 @@ const DisplayAlbum = () => {
                                 <div className="w-4 text-center">
                                     {hoveredIndex === index ? (
                                         <img src={playsIcon} alt="play" className="w-4 h-4 mx-auto" />
-                                    ) : isCurrentSong(item.id) ? (
+                                    ) : item.id === songPlaying ? (
                                         <img src={musicPlaying} className="w-4 h-4 mx-auto" />
                                     ) : (
                                         <span className="text-gray-400 text-sm">{index + 1}</span>

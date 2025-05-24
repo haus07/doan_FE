@@ -6,6 +6,7 @@ import { albumsData } from "../assets/assets";
 import Search from "./Search";
 import ShowLyrics from "./ShowLyrics";
 import { AnimatePresence } from "framer-motion";
+import DisplayArtist from './DisplayArtist';
 
 const Display = () => {
     const displayRef = useRef();
@@ -24,13 +25,14 @@ const Display = () => {
     })
 
     return (
-        <div ref={displayRef} className="w-[100%] m-2 px-6 pt-4 rounde bg-[#121212] text-white overflow-auto lg:w-[55%] lg:ml-0 ">
+        <div ref={displayRef} className="w-[100%] m-2 px-6 pt-4 rounded bg-[#121212] text-white overflow-auto lg:w-[55%] lg:ml-0 ">
             <AnimatePresence mode="wait">
                 <Routes>
                 <Route path='/' element={<DisplayHome />}></Route>
                 <Route path="/album/:id" element={<DisplayAlbum />}></Route>
                 <Route path="/search" element={<Search />} />
-                <Route path="/showlyrics/:id" element={ <ShowLyrics/>}/>
+                <Route path="/showlyrics/:id" element={<ShowLyrics />} />
+                <Route path="/artist/:id" element={<DisplayArtist/>}/>
             </Routes>
             </AnimatePresence>
         </div>

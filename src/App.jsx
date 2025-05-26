@@ -1,27 +1,31 @@
-// App.jsx
-import React, { useState } from "react";
-import { Routes, Route } from "react-router-dom";
-import MainLayout from "./MainLayout";
+import React, { useContext, useState } from "react";
+import Sidebar from "./components/Sidebar";
+import Player from "./components/Player";
+import Display from "./components/Display";
+import { PlayerContext } from "./context/PlayerContext";
+import Queue from "./components/Queue";
 import Intro from "./components/Intro";
-import Podcasts from "./pages/Podcasts";
-import PodcastDetail from "./pages/PodcastDetail";
+import DisplayArtist from "./components/DisplayArtist";
 
 function App() {
+  const { audioRef, track } = useContext(PlayerContext);
   const [showIntro, setShowIntro] = useState(true);
-
-  if (showIntro) {
-    return <Intro onFinish={() => setShowIntro(false)} />;
-  }
-
   return (
-    <Routes>
-      <Route path="/" element={<MainLayout />}>
-        <Route index element={<Podcasts />} />
-        <Route path="podcasts" element={<Podcasts />} />
-        <Route path="podcasts/:id" element={<PodcastDetail />} />
-        {/* các route khác */}
-      </Route>
-    </Routes>
+    <>
+      {showIntro ? (
+        <Intro onFinish={() => setShowIntro(false)} />
+      ) : (
+        <div className="h-screen bg-black">
+          <div className="h-[90%] flex">
+            <Sidebar />
+            <Display />
+            <Queue />
+          </div>
+          <Player />
+          <audio ref={audioRef} src={track.file} preload="auto"></audio>
+        </div>
+      )}
+    </>
   );
 }
 

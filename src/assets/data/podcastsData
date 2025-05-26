@@ -1,0 +1,26 @@
+// src/assets/data/podcastsData.js
+
+export const podcastsData = [
+  {
+    id: 1,
+    title: "Tâm sự Developer",
+    author: "Nguyễn Văn A",
+    image: "/images/podcast1.jpg",
+    description: "Chia sẻ về cuộc sống lập trình viên.",
+    episodes: [
+      { title: "Tập 1: Học lập trình từ đâu?", duration: "12:45" },
+      { title: "Tập 2: Bí quyết vượt qua deadline", duration: "15:20" },
+    ],
+  },
+  {
+    id: 2,
+    title: "Code & Chill",
+    author: "Lê Thị B",
+    image: "/images/podcast2.jpg",
+    description: "Vừa code vừa nghe nhạc chill.",
+    episodes: [
+      { title: "Chill 1: Code ban đêm", duration: "08:50" },
+      { title: "Chill 2: Nhạc cho backend", duration: "10:30" },
+    ],
+  },
+];

@@ -7,6 +7,9 @@ import "./PremiumButton.css";
 const Navbar = () => {
   const navigate = useNavigate();
 
+  // Để highlight đúng tab đang active, bạn có thể lấy pathname hiện tại
+  const currentPath = window.location.pathname.toLowerCase();
+
   return (
     <>
       <div className="w-full flex justify-between items-center font-semibold">
@@ -50,15 +53,35 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center gap-3 mt-4 text-sm">
-        {["All", "Music", "Podcasts"].map((item, index) => (
-          <p
-            key={index}
-            className={`px-4 py-1 rounded-full cursor-pointer transition-all ${index === 0 ? "bg-white text-black" : "bg-black text-white hover:bg-gray-800"
+        {["All", "Music", "Podcasts"].map((item, index) => {
+          // Xác định class active dựa vào currentPath
+          const lowerItem = item.toLowerCase();
+          const isActive =
+            (lowerItem === "all" &&
+              (currentPath === "/" || currentPath === "/all")) ||
+            (lowerItem === "podcasts" && currentPath.startsWith("/podcasts"));
+
+          return (
+            <p
+              key={index}
+              onClick={() => {
+                if (lowerItem === "podcasts") {
+                  navigate("/podcasts"); // chuyển trang Podcasts
+                } else if (lowerItem === "all") {
+                  navigate("/all"); // hoặc navigate("/")
+                }
+                // Music không làm gì => giữ nguyên trang
+              }}
+              className={`px-4 py-1 rounded-full cursor-pointer transition-all ${
+                isActive
+                  ? "bg-white text-black"
+                  : "bg-black text-white hover:bg-gray-800"
               }`}
-          >
-            {item}
-          </p>
-        ))}
+            >
+              {item}
+            </p>
+          );
+        })}
       </div>
     </>
   );

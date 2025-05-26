@@ -7,6 +7,7 @@ import Artist from "./Artist";
 import { motion } from "framer-motion";
 
 const DisplayHome = () => {
+  
   const [randomSongs, setRandomSongs] = useState([]);
 
   useEffect(() => {

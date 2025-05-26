@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import { assets } from "../assets/assets";
+import { assets, songsData } from "../assets/assets";
 import { PlayerContext } from "../context/PlayerContext";
 import PlayButton from "./PlayButton";
 import PauseButton from "./PauseButton";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Player = () => {
   const {
@@ -21,27 +21,16 @@ const Player = () => {
     handleVolumeChange,
   } = useContext(PlayerContext);
   const navigate = useNavigate();
-
-  // Nếu track chưa có hoặc undefined, return null hoặc giao diện khác
-  if (!track) {
-    return null; // hoặc giao diện loading, hoặc thông báo "Chưa có bài hát/phát podcast"
-  }
-
-  // Lấy các thuộc tính an toàn với giá trị mặc định
-  const name = track.name || track.title || "Không xác định";
-  const image = track.image || "";
-  const desc = track.desc || track.description || "";
-
   return (
     <div className="h-[10%] bg-black flex justify-between items-center text-white px-6 border-t border-gray-800">
       <div className="hidden lg:flex items-center gap-4 flex-1 min-w-0">
-        <img className="w-14 h-14 rounded shadow-md" src={image} alt={name} />
+        <img className="w-14 h-14 rounded shadow-md" src={track.image} alt="" />
         <div className="overflow-hidden">
           <p className="font-medium text-sm whitespace-nowrap overflow-hidden text-ellipsis">
-            {name}
+            {track.name}
           </p>
           <p className="text-xs text-gray-400 whitespace-nowrap overflow-hidden text-ellipsis">
-            {desc.slice(0, 12)}
+            {track.desc.slice(0, 12)}
           </p>
         </div>
       </div>
@@ -51,37 +40,38 @@ const Player = () => {
           <img
             className="w-5 h-5 opacity-70 hover:opacity-100 transition-opacity cursor-pointer"
             src={assets.shuffle_icon}
-            alt="Shuffle"
+            alt=""
           />
           <img
             onClick={previous}
             className="w-5 h-5 opacity-80 hover:opacity-100 transition-opacity cursor-pointer"
             src={assets.prev_icon}
-            alt="Previous"
+            alt=""
           />
           <div className="group relative rounded-full p-2 hover:scale-105 transition-transform">
             {playStatus ? (
               <PauseButton
                 onClick={pause}
-                className="bg-green-500 w-9 h-9 rounded-full shadow-lg flex items-center justify-center cursor-pointer"
+                className="bg-green-500 w-9 h-9 rounded-full shadow-lg flex items-center justify-center cursor-pointer "
               />
             ) : (
               <PlayButton
                 onClick={play}
-                className="bg-green-500 w-9 h-9 rounded-full shadow-lg flex items-center justify-center cursor-pointer"
+                className="bg-green-500 w-9 h-9 rounded-full shadow-lg flex items-center justify-center cursor-pointer "
               />
             )}
           </div>
+
           <img
             onClick={next}
             className="w-5 h-5 opacity-80 hover:opacity-100 transition-opacity cursor-pointer"
             src={assets.next_icon}
-            alt="Next"
+            alt=""
           />
           <img
             className="w-5 h-5 opacity-70 hover:opacity-100 transition-opacity cursor-pointer"
             src={assets.loop_icon}
-            alt="Loop"
+            alt=""
           />
         </div>
         <div className="flex items-center gap-2 w-full">
@@ -94,7 +84,7 @@ const Player = () => {
           <div
             ref={seekBg}
             onClick={seekSong}
-            className="flex-grow h-1 bg-gray-600 hover:bg-gray-500 rounded-full cursor-pointer group relative"
+            className="flex-grow h-1  bg-gray-600 hover:bg-gray-500 rounded-full cursor-pointer group relative"
           >
             <div
               ref={seekBar}
@@ -117,24 +107,24 @@ const Player = () => {
           onClick={() => navigate(`/showlyrics/${track.id}`)}
           className="w-4 h-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer"
           src={assets.mic_icon}
-          alt="Lyrics"
+          alt=""
         />
 
         <img
           className="w-4 h-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer"
           src={assets.queue_icon}
-          alt="Queue"
+          alt=""
         />
         <img
           className="w-4 h-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer"
           src={assets.speaker_icon}
-          alt="Speaker"
+          alt=""
         />
         <div className="flex items-center gap-1">
           <img
             className="w-4 h-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer"
             src={assets.volume_icon}
-            alt="Volume"
+            alt=""
           />
           <input
             type="range"
@@ -144,20 +134,20 @@ const Player = () => {
             value={volume}
             onChange={handleVolumeChange}
             className="w-24 h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer 
-                       [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 
-                       [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:bg-white 
-                       [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:hover:scale-110"
+                             [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 
+                             [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:bg-white 
+                             [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:hover:scale-110"
           />
         </div>
         <img
           className="w-4 h-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer ml-2"
           src={assets.mini_player_icon}
-          alt="Mini player"
+          alt=""
         />
         <img
           className="w-4 h-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer"
           src={assets.zoom_icon}
-          alt="Zoom"
+          alt=""
         />
       </div>
     </div>

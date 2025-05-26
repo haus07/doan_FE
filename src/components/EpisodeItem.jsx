@@ -4,7 +4,7 @@ const EpisodeItem = ({ episode, onPlay }) => {
   return (
     <div className="flex items-center justify-between p-3 rounded-lg hover:bg-zinc-800 transition">
       <div>
-        <h4 className="text-white font-semibold">{episode.title}</h4>
+        <h4 className="text-white font-semibold">{episode.name}</h4>
         <p className="text-sm text-gray-400">
           {episode.date} • {episode.duration}
         </p>

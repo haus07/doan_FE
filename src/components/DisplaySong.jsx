@@ -8,6 +8,8 @@ import { albumsData, assets, songsData, artist } from "../assets/assets";
 import SongItem from "./SongItem";
 import PlayButton from "./PlayButton"
 import PauseButton from "./PauseButton";
+import playsIcon from "../assets/play.png";
+import musicPlaying from "../assets/hinh/musicplaying.gif";
 
 
 
@@ -40,7 +42,11 @@ const DisplaySong = () => {
     }
     const songAlbum = songsData.filter(song => Number(song.album_id) === Number(albumId));
     const { playWithId, currentSong, pause, playWithAlbumId, currentAlbumId, playStatus } = useContext(PlayerContext); 
-    const navigate = useNavigate()
+  const navigate = useNavigate()
+  const [hoveredIndex, setHoveredIndex] = useState(null)
+         const [songPlaying, setSongPlaying] = useState(null);
+  
+  
     
     
   return (
@@ -95,13 +101,13 @@ const DisplaySong = () => {
           
           pause()
           }
-          className="bg-green-500 hover:bg-green-400 text-black font-bold p-4 rounded-full  shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center w-14 h-14 mt-1"
+          className="bg-green-500 hover:bg-green-400 text-black font-bold p-4 rounded-full  shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center w-14 h-14 mt-0"
           
         />
       :
         <PlayButton onClick={()=>
           playWithId(id)
-          } className="bg-green-500 hover:bg-green-400 text-black font-bold p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center w-14 h-14 mt-1" />
+          } className="bg-green-500 hover:bg-green-400 text-black font-bold p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center w-14 h-14 mt-0" />
                     
       }
 
@@ -131,10 +137,21 @@ const DisplaySong = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-12 gap-4 px-4 py-3 hover:bg-gray-800 rounded-lg transition-colors group">
+      <div
+         onClick={() => {
+                                playWithId(song.id),
+                                setSongPlaying(song.id)
+                            }
+                            }
+                            onMouseEnter={() => setHoveredIndex(song.id)}
+                            onMouseLeave={() => setHoveredIndex(null)}
+        className="grid grid-cols-12 gap-4 px-4 py-3 hover:bg-gray-800 rounded-lg transition-colors group">
         <div className="col-span-1 flex items-center">
-          <span className="text-gray-400 group-hover:hidden">1</span>
-          <Play className="w-4 h-4 text-white hidden group-hover:block" />
+           {hoveredIndex === song.id ? (
+                                                  <img src={playsIcon} alt="play" className="w-4 h-4 mx-auto" />
+                                              ) : song.id === songPlaying ? (
+                                                  <img src={musicPlaying} className="w-4 h-4 mx-auto" />
+                                              ) : null}
         </div>
         
         <div className="col-span-7 flex flex-col">

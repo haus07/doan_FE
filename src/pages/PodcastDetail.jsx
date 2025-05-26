@@ -2,11 +2,12 @@ import React, { useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { PlayerContext } from "../context/PlayerContext";
 import { motion } from "framer-motion";
-import { podcasts } from "../components/PodcastList";
-
+import { podcasts } from "../assets/assets";
+import PlayButton from "../components/PlayButton";
+import PauseButton from "../components/PauseButton";
 const PodcastDetail = () => {
   const { id } = useParams();
-  const { playPodcast, playStatus, track, pause } = useContext(PlayerContext);
+  const { playPodcast, playStatus, track, pause,playWithId } = useContext(PlayerContext);
 
   const podcast = podcasts.find((p) => p.id === Number(id));
 
@@ -56,19 +57,27 @@ const PodcastDetail = () => {
         />
 
         <div className="flex flex-col flex-1">
-          <h1 className="text-4xl font-bold mb-2">{podcast.title}</h1>
+          <h1 className="text-4xl font-bold mb-2">{podcast.name}</h1>
           <h2 className="text-green-400 text-xl mb-4">
             Tác giả: {podcast.author}
           </h2>
-          <p className="mb-6 text-gray-300">{podcast.description}</p>
+          <p className="mb-6 text-gray-300">{podcast.desc}</p>
 
-          <button
-            onClick={handleTogglePlay}
-            title={isCurrentPodcastPlaying ? "Tạm dừng" : "Phát"}
-            className="bg-green-500 hover:bg-green-600 transition rounded w-10 h-10 flex items-center justify-center text-lg font-semibold"
-          >
-            {isCurrentPodcastPlaying ? "⏸️" : "▶️"}
-          </button>
+          {playStatus ?
+        <PauseButton 
+          onClick={()=>
+          
+          pause()
+          }
+          className="bg-green-500 hover:bg-green-400 text-black font-bold p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center w-14 h-14 mt-5"
+          
+        />
+      :
+        <PlayButton onClick={()=>
+          playWithId(podcast.id)
+          } className="bg-green-500 hover:bg-green-400 text-black font-bold p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center w-14 h-14 mt-5" />
+                    
+      }
         </div>
       </div>
 

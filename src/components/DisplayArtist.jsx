@@ -7,12 +7,14 @@ import { useContext, useState } from "react";
 import { PlayerContext } from "../context/PlayerContext";
 import playsIcon from "../assets/play.png";
 import musicPlaying from "../assets/hinh/musicplaying.gif";
+import PlayButton from "./PlayButton";
+import PauseButton from "./PauseButton";
 
 const DisplayArtist = () => {
   const { id } = useParams();
   const artistDetail = artist[Number(id)];
   const songAlbum = songsData.filter(song => Number(song.album_id) === Number(id));
-  const { playWithId, currentSong } = useContext(PlayerContext);
+  const { playWithId, currentSong,playStatus,pause } = useContext(PlayerContext);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const albumData = albumsData[id];
   const [songPlaying, setSongPlaying] = useState(null);
@@ -92,12 +94,21 @@ ${artistDetail.name} is a US/UK pop singer known for their dreamy melodies and n
         transition={{ delay: 0.8 }}
       >
         <div className="flex items-center gap-6">
-          <motion.button
-            className="w-14 h-14 bg-green-500 rounded-full flex items-center justify-center hover:scale-105 hover:bg-green-400 transition-all duration-200 shadow-lg"
-            whileTap={{ scale: 0.95 }}
-          >
-            <Play className="w-6 h-6 text-black ml-1" fill="currentColor" />
-          </motion.button>
+          {playStatus ?
+        <PauseButton 
+          onClick={()=>
+          
+          pause()
+          }
+          className="bg-green-500 hover:bg-green-400 text-black font-bold p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center w-14 h-14 mt-0"
+          
+        />
+      :
+        <PlayButton onClick={()=>
+          playWithId(songAlbum[0].id)
+          } className="bg-green-500 hover:bg-green-400 text-black font-bold p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center w-14 h-14 mt-0" />
+                    
+      }
 
           <motion.div className="w-12 h-12 rounded overflow-hidden" whileHover={{ scale: 1.05 }}>
             <img src={artistDetail.imgDetail} alt="Album cover" className="w-full h-full object-cover" />

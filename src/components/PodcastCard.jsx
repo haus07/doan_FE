@@ -9,8 +9,8 @@ const PodcastCard = ({ podcast }) => {
         className="w-full h-48 object-cover"
       />
       <div className="p-4">
-        <h3 className="text-white font-semibold text-lg">{podcast.title}</h3>
-        <p className="text-gray-400 text-sm mt-1">{podcast.description}</p>
+        <h3 className="text-white font-semibold text-lg">{podcast.name}</h3>
+        <p className="text-gray-400 text-sm mt-1">{podcast.desc}</p>
       </div>
     </div>
   );

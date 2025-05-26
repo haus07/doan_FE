@@ -5,90 +5,9 @@ import podcast1Img from "../assets/hinh/podcast/podcast1.jpg";
 import podcast2Img from "../assets/hinh/podcast/podcast2.jpg";
 import podcast3Img from "../assets/hinh/podcast/podcast3.jpg";
 import podcast1vd from "../assets/hinh/podcast/podcast.mp3";
+import {podcasts} from "../assets/assets"
 
-const podcasts = [
-  {
-    id: 1,
-    title: "The Daily Tech Podcast",
-    author: "Tech News",
-    description: "Your daily dose of technology news and updates.",
-    image: podcast1Img,
-    file: podcast1vd,
-  },
-  {
-    id: 2,
-    title: "Health Matters",
-    author: "Dr. Smith",
-    description: "Exploring health tips and medical breakthroughs.",
-    image: podcast2Img,
-    file: podcast1vd,
-  },
-  {
-    id: 3,
-    title: "History Uncovered",
-    author: "Jane Doe",
-    description: "Deep dives into fascinating historical events.",
-    image: podcast3Img,
-    file: podcast1vd,
-  },
-  {
-    id: 4,
-    title: "Finance Today",
-    author: "Money Talks",
-    description: "Latest updates on finance and economy.",
-    image: podcast1Img,
-    file: podcast1vd,
-  },
-  {
-    id: 5,
-    title: "True Crime Stories",
-    author: "Crime Watch",
-    description: "Unraveling the most intriguing true crime cases.",
-    image: podcast2Img,
-    file: podcast1vd,
-  },
-  {
-    id: 6,
-    title: "Mindfulness and Meditation",
-    author: "Zen Life",
-    description: "Guided meditation and mindfulness tips.",
-    image: podcast3Img,
-    file: podcast1vd,
-  },
-  {
-    id: 7,
-    title: "Science Weekly",
-    author: "SciWorld",
-    description: "The latest discoveries and science news.",
-    image: podcast1Img,
-    file: podcast1vd,
-  },
-  {
-    id: 8,
-    title: "Sports Talk",
-    author: "Game Time",
-    description: "Discussion on the latest sports events and news.",
-    image: podcast2Img,
-    file: podcast1vd,
-  },
-  {
-    id: 9,
-    title: "Travel Diaries",
-    author: "Wanderlust",
-    description: "Stories and tips from travelers around the world.",
-    image: podcast3Img,
-    file: podcast1vd,
-  },
-  {
-    id: 10,
-    title: "Creative Minds",
-    author: "Art & Design",
-    description: "Exploring creativity in art, design, and culture.",
-    image: podcast3Img,
-    file: podcast1vd,
-  },
-];
-export { podcasts };
+
 
 const PodcastList = () => {
   return (
@@ -110,7 +29,7 @@ const PodcastList = () => {
             >
               <img
                 src={podcast.image}
-                alt={podcast.title}
+                alt={podcast.name}
                 className="w-full h-full object-cover rounded-lg"
               />
               <motion.div
@@ -130,11 +49,11 @@ const PodcastList = () => {
             </motion.div>
             <div className="flex flex-col flex-1">
               <h3 className="text-xl font-semibold text-white">
-                {podcast.title}
+                {podcast.name}
               </h3>
               <p className="text-green-400 mb-2">{podcast.author}</p>
               <p className="text-gray-300 text-sm line-clamp-3">
-                {podcast.description}
+                {podcast.desc}
               </p>
             </div>
             <motion.div

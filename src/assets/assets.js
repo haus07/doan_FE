@@ -136,6 +136,9 @@ import img61 from "./hinh/artistDetail/TWdetail.jpg";
 import img62 from "./hinh/artistDetail/arianagrandeDetail.jpg";
 import img63 from "./hinh/artistDetail/brunoMars.jpg";
 import podcast1vd from "./hinh/podcast/podcast.mp3";
+import podcast1Img from "../assets/hinh/podcast/podcast1.jpg";
+import podcast2Img from "../assets/hinh/podcast/podcast2.jpg";
+import podcast3Img from "../assets/hinh/podcast/podcast3.jpg";
 
 export const artist = [
   {
@@ -703,4 +706,168 @@ export const songsData = [
     duration: "4:46",
     album_id: 1,
   },
+  {
+      id: 50,
+      name: "The Daily Tech Podcast",
+      author: "Tech News",
+      desc: "Your daily dose of technology news and updates.",
+      image: podcast1Img,
+      file: podcast1vd,
+    },
+    {
+      id: 51,
+      name: "Health Matters",
+      author: "Dr. Smith",
+      desc: "Exploring health tips and medical breakthroughs.",
+      image: podcast2Img,
+      file: podcast1vd,
+    },
+    {
+      id: 52,
+      name: "History Uncovered",
+      author: "Jane Doe",
+      desc: "Deep dives into fascinating historical events.",
+      image: podcast3Img,
+      file: podcast1vd,
+    },
+    {
+      id: 53,
+      name: "Finance Today",
+      author: "Money Talks",
+      desc: "Latest updates on finance and economy.",
+      image: podcast1Img,
+      file: podcast1vd,
+    },
+    {
+      id: 54,
+      name: "True Crime Stories",
+      author: "Crime Watch",
+      desc: "Unraveling the most intriguing true crime cases.",
+      image: podcast2Img,
+      file: podcast1vd,
+    },
+    {
+      id: 55,
+      name: "Mindfulness and Meditation",
+      author: "Zen Life",
+      desc: "Guided meditation and mindfulness tips.",
+      image: podcast3Img,
+      file: podcast1vd,
+    },
+    {
+      id: 56,
+      name: "Science Weekly",
+      author: "SciWorld",
+      desc: "The latest discoveries and science news.",
+      image: podcast1Img,
+      file: podcast1vd,
+    },
+    {
+      id: 57,
+      name: "Sports Talk",
+      author: "Game Time",
+      desc: "Discussion on the latest sports events and news.",
+      image: podcast2Img,
+      file: podcast1vd,
+    },
+    {
+      id: 58,
+      name: "Travel Diaries",
+      author: "Wanderlust",
+      desc: "Stories and tips from travelers around the world.",
+      image: podcast3Img,
+      file: podcast1vd,
+    },
+    {
+      id: 59,
+      name: "Creative Minds",
+      author: "Art & Design",
+      desc: "Exploring creativity in art, design, and culture.",
+      image: podcast3Img,
+      file: podcast1vd,
+    },
+];
+
+
+ export const podcasts = [
+   {
+        id: 50,
+        name: "The Daily Tech Podcast",
+        author: "Tech News",
+        desc: "Your daily dose of technology news and updates.",
+        image: podcast1Img,
+        file: podcast1vd,
+      },
+      {
+        id: 51,
+        name: "Health Matters",
+        author: "Dr. Smith",
+        desc: "Exploring health tips and medical breakthroughs.",
+        image: podcast2Img,
+        file: podcast1vd,
+      },
+      {
+        id: 52,
+        name: "History Uncovered",
+        author: "Jane Doe",
+        desc: "Deep dives into fascinating historical events.",
+        image: podcast3Img,
+        file: podcast1vd,
+      },
+      {
+        id: 53,
+        name: "Finance Today",
+        author: "Money Talks",
+        desc: "Latest updates on finance and economy.",
+        image: podcast1Img,
+        file: podcast1vd,
+      },
+      {
+        id: 54,
+        name: "True Crime Stories",
+        author: "Crime Watch",
+        desc: "Unraveling the most intriguing true crime cases.",
+        image: podcast2Img,
+        file: podcast1vd,
+      },
+      {
+        id: 55,
+        name: "Mindfulness and Meditation",
+        author: "Zen Life",
+        desc: "Guided meditation and mindfulness tips.",
+        image: podcast3Img,
+        file: podcast1vd,
+      },
+      {
+        id: 56,
+        name: "Science Weekly",
+        author: "SciWorld",
+        desc: "The latest discoveries and science news.",
+        image: podcast1Img,
+        file: podcast1vd,
+      },
+      {
+        id: 57,
+        name: "Sports Talk",
+        author: "Game Time",
+        desc: "Discussion on the latest sports events and news.",
+        image: podcast2Img,
+        file: podcast1vd,
+      },
+      {
+        id: 58,
+        name: "Travel Diaries",
+        author: "Wanderlust",
+        desc: "Stories and tips from travelers around the world.",
+        image: podcast3Img,
+        file: podcast1vd,
+      },
+      {
+        id: 59,
+        name: "Creative Minds",
+        author: "Art & Design",
+        desc: "Exploring creativity in art, design, and culture.",
+        image: podcast3Img,
+        file: podcast1vd,
+      },
 ];

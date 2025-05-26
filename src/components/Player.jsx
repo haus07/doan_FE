@@ -4,11 +4,20 @@ import { PlayerContext } from '../context/PlayerContext'
 import PlayButton from "./PlayButton";
 import PauseButton from "./PauseButton";
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import {
+  FaVolumeMute,
+  FaVolumeOff,
+  FaVolumeDown,
+  FaVolumeUp,
+} from "react-icons/fa";
+
 
 const Player = () => {
 
     const { track,seekBar, seekBg ,playStatus ,play,pause,time,previous,next,seekSong,volume,handleVolumeChange } = useContext(PlayerContext);
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [activeMicId, setActiveMicId] = useState(null);
     return (
     <div className="h-[10%] bg-black flex justify-between items-center text-white px-6 border-t border-gray-800">
         <div className="hidden lg:flex items-center gap-4 flex-1 min-w-0">
@@ -52,25 +61,44 @@ const Player = () => {
         </div>
         
         <div className="hidden lg:flex items-center gap-3 flex-1 justify-end">
-            <img onClick={()=>navigate(`/showlyrics/${track.id}`)} className="w-4 h-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer" src={assets.mic_icon} alt="" />
-            
+           <img
+  onClick={() => {
+    setActiveMicId(track.id === activeMicId ? null : track.id);
+    navigate(`/showlyrics/${track.id}`);
+  }}
+  className={`w-4 h-4 transition-opacity cursor-pointer ${
+    track.id === activeMicId ? "opacity-100 brightness-150" : "opacity-70 hover:opacity-100"
+  }`}
+  src={assets.mic_icon}
+  alt=""
+/>
             <img className="w-4 h-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer" src={assets.queue_icon} alt="" />
             <img className="w-4 h-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer" src={assets.speaker_icon} alt="" />
-            <div className="flex items-center gap-1">
-                <img className="w-4 h-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer" src={assets.volume_icon} alt="" />
-                <input
-                    type="range"
-                    min="0"
-                    max="1"
-                    step="0.01"
-                    value={volume}
-                    onChange={handleVolumeChange}
-                    className="w-24 h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer 
-                             [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 
-                             [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:bg-white 
-                             [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:hover:scale-110"
-                />
-            </div>
+            <div className="flex items-center gap-1 text-white text-xl">
+  {volume === 0 ? (
+    <FaVolumeMute />
+  ) : volume < 0.33 ? (
+    <FaVolumeOff />
+  ) : volume < 0.66 ? (
+    <FaVolumeDown />
+  ) : (
+    <FaVolumeUp />
+  )}
+
+  <input
+    type="range"
+    min="0"
+    max="1"
+    step="0.01"
+    value={volume}
+    onChange={handleVolumeChange}
+    className="w-24 h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer 
+              [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 
+              [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:bg-white 
+              [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:hover:scale-110"
+  />
+</div>
+
             <img className="w-4 h-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer ml-2" src={assets.mini_player_icon} alt="" />
             <img className="w-4 h-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer" src={assets.zoom_icon} alt="" />
         </div>

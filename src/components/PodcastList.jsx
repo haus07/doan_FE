@@ -13,7 +13,7 @@ const podcasts = [
     author: "Tech News",
     description: "Your daily dose of technology news and updates.",
     image: podcast1Img,
-    audio: podcast1vd,
+    file: podcast1vd,
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const podcasts = [
     author: "Dr. Smith",
     description: "Exploring health tips and medical breakthroughs.",
     image: podcast2Img,
-    audio: podcast1vd,
+    file: podcast1vd,
   },
   {
     id: 3,
@@ -29,7 +29,7 @@ const podcasts = [
     author: "Jane Doe",
     description: "Deep dives into fascinating historical events.",
     image: podcast3Img,
-    audio: podcast1vd,
+    file: podcast1vd,
   },
   {
     id: 4,
@@ -37,7 +37,7 @@ const podcasts = [
     author: "Money Talks",
     description: "Latest updates on finance and economy.",
     image: podcast1Img,
-    audio: podcast1vd,
+    file: podcast1vd,
   },
   {
     id: 5,
@@ -45,7 +45,7 @@ const podcasts = [
     author: "Crime Watch",
     description: "Unraveling the most intriguing true crime cases.",
     image: podcast2Img,
-    audio: podcast1vd,
+    file: podcast1vd,
   },
   {
     id: 6,
@@ -53,7 +53,7 @@ const podcasts = [
     author: "Zen Life",
     description: "Guided meditation and mindfulness tips.",
     image: podcast3Img,
-    audio: podcast1vd,
+    file: podcast1vd,
   },
   {
     id: 7,
@@ -61,7 +61,7 @@ const podcasts = [
     author: "SciWorld",
     description: "The latest discoveries and science news.",
     image: podcast1Img,
-    audio: podcast1vd,
+    file: podcast1vd,
   },
   {
     id: 8,
@@ -69,7 +69,7 @@ const podcasts = [
     author: "Game Time",
     description: "Discussion on the latest sports events and news.",
     image: podcast2Img,
-    audio: podcast1vd,
+    file: podcast1vd,
   },
   {
     id: 9,
@@ -77,7 +77,7 @@ const podcasts = [
     author: "Wanderlust",
     description: "Stories and tips from travelers around the world.",
     image: podcast3Img,
-    audio: podcast1vd,
+    file: podcast1vd,
   },
   {
     id: 10,
@@ -85,7 +85,7 @@ const podcasts = [
     author: "Art & Design",
     description: "Exploring creativity in art, design, and culture.",
     image: podcast3Img,
-    audio: podcast1vd,
+    file: podcast1vd,
   },
 ];
 export { podcasts };

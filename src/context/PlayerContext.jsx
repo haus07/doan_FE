@@ -1,5 +1,6 @@
 import { createContext, useEffect, useRef, useState } from "react";
 import { songsData } from "../assets/assets";
+import { podcasts } from "../components/PodcastList";
 
 export const PlayerContext = createContext();
 
@@ -8,14 +9,20 @@ const PlayerContextProvider = (props) => {
   const seekBg = useRef(null);
   const seekBar = useRef(null);
 
-  const [track, setTrack] = useState(songsData[0]);
+  const [track, setTrack] = useState({ ...songsData[0], type: "song" });
   const [playStatus, setPlayStatus] = useState(false);
+  const [currentTrackId, setCurrentTrackId] = useState(songsData[0].id);
+  const [currentType, setCurrentType] = useState("song");
   const [currentAlbumId, setCurrentAlbumId] = useState(null);
-  const [currentTrackId, setCurrentTrackId] = useState(0);
   const [time, setTime] = useState({
     currentTime: { second: 0, minute: 0 },
     totalTime: { second: 0, minute: 0 },
   });
+  const [volume, setVolume] = useState(1);
+
+  const getDataByType = (type) => {
+    return type === "podcast" ? podcasts : songsData;
+  };
 
   const play = () => {
     if (audioRef.current) {
@@ -31,28 +38,62 @@ const PlayerContextProvider = (props) => {
     }
   };
 
-  const playWithId = async (id) => {
-    setCurrentTrackId(id);
-    const song = songsData[id];
-    if (song) {
-      setTrack(song);
+  const playWithId = async (id, type = "song") => {
+    const data = getDataByType(type);
+    const item = data.find((el) => el.id === id);
+    if (item) {
+      setTrack({ ...item, type });
+      setCurrentTrackId(id);
+      setCurrentType(type);
+
       if (audioRef.current) {
-        audioRef.current.src = song.file;
-        try {
-          await audioRef.current.play();
-          setPlayStatus(true);
-        } catch (error) {
-          console.log("Play error:", error);
+        // Nếu track đã thay đổi, set src mới và play
+        if (audioRef.current.src !== item.file) {
+          audioRef.current.src = item.file;
+          try {
+            await audioRef.current.play();
+            setPlayStatus(true);
+          } catch (error) {
+            console.log("Play error:", error);
+          }
+        } else {
+          // Nếu src đã là file hiện tại, chỉ cần play nếu đang pause
+          if (audioRef.current.paused) {
+            try {
+              await audioRef.current.play();
+              setPlayStatus(true);
+            } catch (error) {
+              console.log("Play error:", error);
+            }
+          }
         }
       }
     }
   };
 
+  const previous = async () => {
+    const data = getDataByType(currentType);
+    const index = data.findIndex((el) => el.id === currentTrackId);
+    if (index > 0) {
+      await playWithId(data[index - 1].id, currentType);
+    }
+  };
+
+  const next = async () => {
+    const data = getDataByType(currentType);
+    const index = data.findIndex((el) => el.id === currentTrackId);
+    if (index !== -1 && index < data.length - 1) {
+      await playWithId(data[index + 1].id, currentType);
+    }
+  };
+
   const playWithAlbumId = async (albumId) => {
-    setCurrentAlbumId(albumId);
     const songs = songsData.filter((song) => song.album_id === albumId);
     if (songs.length > 0) {
-      setTrack(songs[0]);
+      setTrack({ ...songs[0], type: "song" });
+      setCurrentAlbumId(albumId);
+      setCurrentTrackId(songs[0].id);
+      setCurrentType("song");
       if (audioRef.current) {
         audioRef.current.src = songs[0].file;
         try {
@@ -66,44 +107,36 @@ const PlayerContextProvider = (props) => {
   };
 
   const playSong = (id) => {
-    if (id !== currentTrackId) {
-      playWithId(id);
-    } else if (audioRef.current) {
-      audioRef.current.play();
-      setPlayStatus(true);
+    if (id !== currentTrackId || currentType !== "song") {
+      playWithId(id, "song");
+    } else {
+      play();
     }
   };
 
-  const playAlbum = (id) => {
-    if (id !== currentAlbumId) {
-      playWithAlbumId(id);
-    } else if (audioRef.current) {
-      audioRef.current.play();
-      setPlayStatus(true);
-    }
-  };
-
-  const previous = async () => {
-    if (track.id > 0) {
-      await playWithId(track.id - 1);
-    }
-  };
-
-  const next = async () => {
-    if (track.id < songsData.length - 1) {
-      await playWithId(track.id + 1);
+  const playPodcast = (id) => {
+    if (id !== currentTrackId || currentType !== "podcast") {
+      playWithId(id, "podcast");
+    } else {
+      play();
     }
   };
 
   const seekSong = (e) => {
     if (!audioRef.current || !seekBg.current) return;
-    const seekTime =
-      (e.nativeEvent.offsetX / seekBg.current.offsetWidth) *
-      audioRef.current.duration;
-    audioRef.current.currentTime = seekTime;
-  };
 
-  const [volume, setVolume] = useState(1);
+    const offsetX = e.nativeEvent.offsetX;
+    const width = seekBg.current.offsetWidth;
+    const duration = audioRef.current.duration;
+
+    if (!isFinite(offsetX) || !width || !duration) return;
+
+    const seekTime = (offsetX / width) * duration;
+
+    if (isFinite(seekTime)) {
+      audioRef.current.currentTime = seekTime;
+    }
+  };
 
   const handleVolumeChange = (e) => {
     const newVolume = parseFloat(e.target.value);
@@ -113,7 +146,7 @@ const PlayerContextProvider = (props) => {
     }
   };
 
-  // Cập nhật thanh seek và thời gian
+  // Update time + seek bar
   useEffect(() => {
     if (!audioRef.current) return;
 
@@ -144,38 +177,33 @@ const PlayerContextProvider = (props) => {
       if (audioRef.current)
         audioRef.current.removeEventListener("timeupdate", handleTimeUpdate);
     };
-  }, [audioRef, seekBar]);
+  }, []);
 
-  // Cập nhật src và trạng thái phát khi track hoặc playStatus thay đổi
+  // Auto update src + play/pause
   useEffect(() => {
     if (!audioRef.current) return;
 
-    audioRef.current.src = track.file;
-
-    if (playStatus) {
-      audioRef.current.play().catch((err) => console.log("Play error:", err));
-    } else {
-      audioRef.current.pause();
+    if (track && track.file) {
+      if (audioRef.current.src !== track.file) {
+        audioRef.current.src = track.file;
+      }
+      if (playStatus) {
+        audioRef.current.play().catch((err) => console.log("Play error:", err));
+      } else {
+        audioRef.current.pause();
+      }
     }
   }, [track, playStatus]);
 
-  // Tự động next bài khi hết bài hiện tại
+  // Auto next if song (not podcast)
   useEffect(() => {
     if (!audioRef.current) return;
 
     const handleEnded = () => {
-      const currentIndex = songsData.findIndex(
-        (song) => Number(song.id) === Number(track.id)
-      );
-      if (currentIndex !== -1) {
-        if (currentIndex < songsData.length - 1) {
-          const nextTrack = songsData[currentIndex + 1];
-          setTrack(nextTrack);
-          setCurrentTrackId(nextTrack.id);
-          setPlayStatus(true);
-        } else {
-          setPlayStatus(false);
-        }
+      if (currentType === "song") {
+        next();
+      } else {
+        setPlayStatus(false);
       }
     };
 
@@ -185,7 +213,7 @@ const PlayerContextProvider = (props) => {
       if (audioRef.current)
         audioRef.current.removeEventListener("ended", handleEnded);
     };
-  }, [track]);
+  }, [currentType, currentTrackId]);
 
   const contextValue = {
     audioRef,
@@ -210,8 +238,9 @@ const PlayerContextProvider = (props) => {
     setCurrentTrackId,
     currentAlbumId,
     playWithAlbumId,
-    playAlbum,
+    playAlbum: playWithAlbumId,
     playSong,
+    playPodcast,
   };
 
   return (

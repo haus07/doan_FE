@@ -6,9 +6,8 @@ import { podcasts } from "../components/PodcastList";
 
 const PodcastDetail = () => {
   const { id } = useParams();
-  const { setTrack, audioRef } = useContext(PlayerContext);
+  const { playPodcast, playStatus, track, pause } = useContext(PlayerContext);
 
-  // Lấy podcast theo id từ param
   const podcast = podcasts.find((p) => p.id === Number(id));
 
   const [comments, setComments] = useState([
@@ -21,12 +20,20 @@ const PodcastDetail = () => {
     return <div className="text-white p-6">Podcast không tồn tại!</div>;
   }
 
-  const handlePlay = () => {
-    // Giả sử mỗi podcast có trường audio - bạn cần bổ sung audio URL vào mảng podcasts nếu chưa có
-    setTrack({ file: podcast.audio || "", title: podcast.title });
-    audioRef.current.play();
+  // Kiểm tra podcast hiện tại có đang được phát không
+  const isCurrentPodcastPlaying =
+    track.type === "podcast" && track.id === podcast.id && playStatus;
+
+  // Xử lý bật/tắt phát podcast
+  const handleTogglePlay = () => {
+    if (isCurrentPodcastPlaying) {
+      pause();
+    } else {
+      playPodcast(podcast.id);
+    }
   };
 
+  // Thêm bình luận mới
   const handleAddComment = () => {
     if (newComment.trim() === "") return;
     setComments([
@@ -39,7 +46,6 @@ const PodcastDetail = () => {
   return (
     <div className="p-6 text-white max-w-5xl mx-auto">
       <div className="flex flex-col md:flex-row gap-8">
-        {/* Ảnh bìa lớn */}
         <motion.img
           src={podcast.image}
           alt={podcast.title}
@@ -49,7 +55,6 @@ const PodcastDetail = () => {
           transition={{ duration: 0.5 }}
         />
 
-        {/* Thông tin chi tiết */}
         <div className="flex flex-col flex-1">
           <h1 className="text-4xl font-bold mb-2">{podcast.title}</h1>
           <h2 className="text-green-400 text-xl mb-4">
@@ -58,23 +63,22 @@ const PodcastDetail = () => {
           <p className="mb-6 text-gray-300">{podcast.description}</p>
 
           <button
-            onClick={handlePlay}
-            className="bg-green-500 hover:bg-green-600 transition rounded px-6 py-3 text-lg font-semibold w-40"
+            onClick={handleTogglePlay}
+            title={isCurrentPodcastPlaying ? "Tạm dừng" : "Phát"}
+            className="bg-green-500 hover:bg-green-600 transition rounded w-10 h-10 flex items-center justify-center text-lg font-semibold"
           >
-            ▶️ Nghe Podcast
+            {isCurrentPodcastPlaying ? "⏸️" : "▶️"}
           </button>
         </div>
       </div>
 
-      {/* Phần comment */}
+      {/* Phần bình luận */}
       <div className="mt-12">
         <h3 className="text-2xl font-semibold mb-4">Bình luận</h3>
-
         <div className="space-y-4 max-h-64 overflow-y-auto p-4 bg-[#222222] rounded">
           {comments.length === 0 && (
             <p className="text-gray-400">Chưa có bình luận nào.</p>
           )}
-
           {comments.map((c) => (
             <div key={c.id} className="border-b border-gray-600 pb-2">
               <p className="font-semibold text-green-400">{c.user}:</p>

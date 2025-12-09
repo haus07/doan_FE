@@ -1,8 +1,8 @@
 import React from "react";
-import { assets } from "../assets/assets";
+import { assets } from "../../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import "./PremiumButton.css";
+import "../PremiumButton.css";
 
 const Navbar = () => {
   const navigate = useNavigate();

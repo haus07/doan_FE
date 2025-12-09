@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import { PlayerContext } from "../context/PlayerContext";
 import { motion } from "framer-motion";
 import { podcasts } from "../assets/assets";
-import PlayButton from "../components/PlayButton";
-import PauseButton from "../components/PauseButton";
+import PlayButton from "../components/player/PlayButton";
+import PauseButton from "../components/player/PauseButton";
 const PodcastDetail = () => {
   const { id } = useParams();
   const { playPodcast, playStatus, track, pause,playWithId } = useContext(PlayerContext);

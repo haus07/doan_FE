@@ -1,14 +1,14 @@
 import React, { useContext, useState } from "react";
-import Navbar from "./Navbar";
-import { albumsData, assets } from "../assets/assets";
+import Navbar from "../layouts/Navbar";
+import { albumsData, assets } from "../../assets/assets";
 import { useParams } from "react-router-dom";
-import { PlayerContext } from "../context/PlayerContext";
-import { songsData } from './../assets/assets';
-import playsIcon from "../assets/play.png";
-import musicPlaying from "../assets/hinh/musicplaying.gif";
+import { PlayerContext } from "../../context/PlayerContext";
+import { songsData } from '../../assets/assets';
+import playsIcon from "../../assets/play.png";
+import musicPlaying from "../../assets/hinh/musicplaying.gif";
 import { motion } from "framer-motion";
-import PlayButton from "./PlayButton"
-import PauseButton from "./PauseButton";
+import PlayButton from "../player/PlayButton"
+import PauseButton from "../player/PauseButton";
 
 const DisplayAlbum = () => {
     const { id } = useParams();

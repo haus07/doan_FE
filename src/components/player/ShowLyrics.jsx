@@ -1,7 +1,7 @@
 import React from "react";
-import { lyrics } from "../assets/lyrics";
+import { lyrics } from "../../assets/lyrics";
 import { useParams } from "react-router-dom";
-import Navbar from "./Navbar";
+import Navbar from "../layouts/Navbar";
 import { motion } from "framer-motion";
 
 const ShowLyrics = () => {

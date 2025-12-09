@@ -1,29 +1,41 @@
-// MainLayout.jsx
 import React, { useContext } from "react";
-import Sidebar from "./components/Sidebar";
-import Player from "./components/Player";
-import Display from "./components/Display";
-import Queue from "./components/Queue";
+import Sidebar from "./components/layouts/Sidebar";
+import Player from "./components/player/Player";
+import Display from "./components/display/Display"; // Import cái Display vỏ bọc vừa sửa
 import { PlayerContext } from "./context/PlayerContext";
-import { Outlet } from "react-router-dom";
+import Queue from "./components/player/Queue";
 
-function MainLayout() {
-  const { audioRef, track } = useContext(PlayerContext);
+const MainLayout = () => {
+  const { track } = useContext(PlayerContext);
+
   return (
-    <div className="h-screen bg-black">
-      <div className="h-[90%] flex">
+    <div className="h-screen bg-black relative overflow-hidden">
+      
+      {/* 1. Lớp nền mờ ảo diệu */}
+      <div 
+        className="absolute inset-0 z-0 opacity-40 transition-all duration-1000 ease-in-out"
+        style={{
+           backgroundImage: `url(${track?.image})`,
+           backgroundPosition: 'center',
+           backgroundSize: 'cover',
+           filter: 'blur(80px) brightness(0.5)' // Làm mờ cực mạnh
+        }}
+      />
+      
+      {/* 2. Lớp gradient phủ lên để vẫn đọc được chữ */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#121212] via-[#121212]/90 to-black/30" />
+
+      {/* Nội dung chính (đặt z-index cao hơn để nổi lên trên) */}
+      <div className="h-[90%] flex relative z-10">
         <Sidebar />
-        <Display />
-        <div className="flex-1 overflow-auto p-6">
-          {/* Nội dung con sẽ hiển thị ở đây */}
-          <Outlet />
-        </div>
+        <Display /> 
         <Queue />
       </div>
-      <Player />
-      <audio ref={audioRef} src={track.file} preload="auto"></audio>
+      <div className="relative z-10">
+          <Player />
+      </div>
     </div>
   );
-}
+};
 
 export default MainLayout;

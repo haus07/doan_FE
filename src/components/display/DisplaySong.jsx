@@ -3,13 +3,13 @@ import { Play, Shuffle, Check, Download, MoreHorizontal, List, Clock } from "luc
 import { motion } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
 import { useContext, useState } from "react";
-import { PlayerContext } from "../context/PlayerContext";
-import { albumsData, assets, songsData, artist } from "../assets/assets";
-import SongItem from "./SongItem";
-import PlayButton from "./PlayButton"
-import PauseButton from "./PauseButton";
-import playsIcon from "../assets/play.png";
-import musicPlaying from "../assets/hinh/musicplaying.gif";
+import { PlayerContext } from "../../context/PlayerContext"
+import { albumsData, assets, songsData, artist } from "../../assets/assets";
+import SongItem from "../cards/SongItem";
+import PlayButton from "../player/PlayButton"
+import PauseButton from "../player/PauseButton";
+import playsIcon from "../../assets/play.png";
+import musicPlaying from "../../assets/hinh/musicplaying.gif";
 
 
 

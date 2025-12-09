@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { assets, songsData } from '../assets/assets';
-import { PlayerContext } from '../context/PlayerContext'
+import { assets, songsData } from '../../assets/assets';
+import { PlayerContext } from '../../context/PlayerContext'
 import PlayButton from "./PlayButton";
 import PauseButton from "./PauseButton";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,7 +15,8 @@ import {
 
 const Player = () => {
 
-    const { track,seekBar, seekBg ,playStatus ,play,pause,time,previous,next,seekSong,volume,handleVolumeChange } = useContext(PlayerContext);
+  const { track, seekBar, seekBg, playStatus, play, pause, time, previous, next, seekSong, volume, handleVolumeChange } = useContext(PlayerContext);
+  console.log(track)
   const navigate = useNavigate();
   const [activeMicId, setActiveMicId] = useState(null);
     return (
@@ -24,7 +25,7 @@ const Player = () => {
             <img className="w-14 h-14 rounded shadow-md" src={track.image} alt="" />
             <div className="overflow-hidden">
                 <p className="font-medium text-sm whitespace-nowrap overflow-hidden text-ellipsis">{track.name}</p>
-                <p className="text-xs text-gray-400 whitespace-nowrap overflow-hidden text-ellipsis">{track.desc.slice(0,12)}</p>
+                <p className="text-xs text-gray-400 whitespace-nowrap overflow-hidden text-ellipsis">{track.desc?.slice(0,12)}</p>
             </div>
         </div>
         

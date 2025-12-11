@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import Navbar from "./components/layouts/Navbar";
 import Sidebar from "./components/layouts/Sidebar";
 import Player from "./components/player/Player";
 import Display from "./components/display/Display"; // Import cái Display vỏ bọc vừa sửa
@@ -10,6 +11,7 @@ const MainLayout = () => {
 
   return (
     <div className="h-screen bg-black relative overflow-hidden">
+      <Navbar/>
       
       {/* 1. Lớp nền mờ ảo diệu */}
       <div 
@@ -18,7 +20,7 @@ const MainLayout = () => {
            backgroundImage: `url(${track?.image})`,
            backgroundPosition: 'center',
            backgroundSize: 'cover',
-           filter: 'blur(80px) brightness(0.5)' // Làm mờ cực mạnh
+           filter: 'blur(10px) brightness(1)' // Làm mờ cực mạnh
         }}
       />
       
@@ -26,7 +28,7 @@ const MainLayout = () => {
       <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#121212] via-[#121212]/90 to-black/30" />
 
       {/* Nội dung chính (đặt z-index cao hơn để nổi lên trên) */}
-      <div className="h-[90%] flex relative z-10">
+      <div className="h-[83%] flex relative z-10">
         <Sidebar />
         <Display /> 
         <Queue />

@@ -1,186 +1,196 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useMemo } from "react";
 import Navbar from "../layouts/Navbar";
-import { albumsData, assets } from "../../assets/assets";
 import { useParams } from "react-router-dom";
 import { PlayerContext } from "../../context/PlayerContext";
-import { songsData } from '../../assets/assets';
+import { albumsData, songsData, assets } from '../../assets/assets';
 import playsIcon from "../../assets/play.png";
 import musicPlaying from "../../assets/hinh/musicplaying.gif";
 import { motion } from "framer-motion";
-import PlayButton from "../player/PlayButton"
-import PauseButton from "../player/PauseButton";
+import { Clock, Heart, MoreHorizontal, Play, Pause, Disc, Calendar } from "lucide-react"; // Dùng Lucide cho nhẹ
 
 const DisplayAlbum = () => {
     const { id } = useParams();
-    const albumData = albumsData[id];
-    const { playWithId, currentSong, pause, playWithAlbumId, currentAlbumId, playStatus } = useContext(PlayerContext); 
-       const [songPlaying, setSongPlaying] = useState(null);
-    const songAlbum = songsData.filter(song => Number(song.album_id) === Number(id));
-
+    const { playWithId, currentSong, pause, playStatus } = useContext(PlayerContext);
+    const [songPlaying, setSongPlaying] = useState(null);
     const [hoveredIndex, setHoveredIndex] = useState(null);
 
+    // --- MOCK DATA (Phần này sẽ lấy từ Database sau này) ---
+    // Giả lập lấy album hiện tại
+    const albumData = albumsData[id] || albumsData[0];
+    
+    // Giả lập lọc bài hát của album này
+    const songAlbum = songsData.filter(song => Number(song.album_id) === Number(id));
 
-    const isCurrentSong = (songId) => {
-        return currentSong?.id === songId;
+    // Giả lập Widget "More by Artist" (Các album khác)
+    const moreAlbums = [
+        { id: 2, name: "Justice", year: "2021", image: "https://upload.wikimedia.org/wikipedia/en/0/08/Justin_Bieber_-_Justice.png" },
+        { id: 3, name: "Purpose", year: "2015", image: "https://upload.wikimedia.org/wikipedia/en/2/27/Justin_Bieber_-_Purpose_%28Official_Album_Cover%29.png" },
+        { id: 4, name: "Changes", year: "2020", image: "https://upload.wikimedia.org/wikipedia/en/1/16/Justin_Bieber_-_Changes.png" },
+        { id: 5, name: "Believe", year: "2012", image: "https://upload.wikimedia.org/wikipedia/en/0/0a/Justin_Bieber_-_Believe.png" },
+    ];
+
+    // Giả lập Widget "Copyright Info"
+    const copyrightInfo = {
+        date: "December 25, 2024",
+        label: "Def Jam Recordings",
+        copyright: "© 2024 RBMG / Def Jam Recordings, a division of UMG Recordings, Inc."
     };
+    // --------------------------------------------------------
 
+    const isCurrentSong = (songId) => currentSong?.id === songId;
+
+    // Tính tổng thời gian album (Optional)
+    const totalDuration = "45 min 20 sec"; 
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="min-h-screen bg-gradient-to-b to-black text-white"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="min-h-screen bg-[#121212] text-white font-sans pb-10"
         >
-            <Navbar />
-            
-            <div className="px-6 pt-8 pb-6">
-                <div className="flex gap-8 flex-col md:flex-row md:items-end">
+            {/* --- HEADER SECTION --- */}
+            <div className="px-6 pt-8 pb-8 bg-gradient-to-b from-gray-700/50 to-[#121212]">
+                <div className="flex flex-col md:flex-row gap-8 items-end">
                     <motion.div
-                        initial={{ scale: 0.8, opacity: 0 }}
+                        initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                        className="relative group"
+                        className="shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
                     >
                         <img 
-                            className="w-56 h-56 rounded-lg shadow-2xl object-cover transition-transform duration-300 group-hover:scale-105" 
+                            className="w-52 h-52 md:w-60 md:h-60 rounded shadow-2xl object-cover hover:scale-[1.02] transition-transform duration-500" 
                             src={albumData.image} 
                             alt={albumData.name}
                         />
-                        <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300 rounded-lg"></div>
                     </motion.div>
                     
-                    <motion.div
-                        initial={{ x: -30, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.4 }}
-                        className="flex flex-col gap-2"
-                    >
-                        <span className="text-sm font-medium text-gray-300 uppercase tracking-wide">Playlist</span>
-                        <h1 className="text-4xl md:text-6xl font-bold mb-2 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                    <div className="flex flex-col gap-2">
+                        <span className="text-xs font-bold uppercase tracking-widest text-white/80">Album</span>
+                        <h1 className="text-5xl md:text-7xl font-black text-white tracking-tight drop-shadow-lg mb-2">
                             {albumData.name}
                         </h1>
-                        <p className="text-lg text-gray-300 mb-4 max-w-2xl leading-relaxed">{albumData.desc}</p>
                         
-                        <div className="flex items-center gap-2 text-sm text-gray-400">
-                            <img className="w-6 h-6" src={assets.spotify_logo} alt="Spotify" />
-                            <span className="font-semibold text-white">Spotify</span>
-                            <span>•</span>
-                            <span>1,000 likes</span>
-                            <span>•</span>
-                            <span className="font-semibold">{songAlbum.length} songs</span>
+                        <div className="flex flex-wrap items-center gap-2 text-sm text-gray-300 font-medium">
+                            <div className="flex items-center gap-1">
+                                <img className="w-6 h-6 rounded-full" src={assets.spotify_logo} alt="Artist" /> {/* Thay bằng ảnh Artist nhỏ */}
+                                <span className="text-white hover:underline cursor-pointer font-bold">Artist Name</span> {/* Link to Artist */}
+                            </div>
+                            <span className="text-white/60">•</span>
+                            <span>2024</span>
+                            <span className="text-white/60">•</span>
+                            <span className="text-white">{songAlbum.length} songs,</span>
+                            <span className="text-gray-400 opacity-80">{totalDuration}</span>
                         </div>
-                    </motion.div>
+                    </div>
                 </div>
-               {playStatus ?
-        <PauseButton 
-          onClick={()=>
-          
-          pause()
-          }
-          className="bg-green-500 hover:bg-green-400 text-black font-bold p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center w-14 h-14 mt-5"
-          
-        />
-      :
-        <PlayButton onClick={()=>
-          playWithId(songAlbum[0].id)
-          } className="bg-green-500 hover:bg-green-400 text-black font-bold p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center w-14 h-14 mt-5" />
-                    
-      }
 
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.6 }}
-                    className="mt-8"
-                >
-                    
-                </motion.div>
+                {/* ACTION BUTTONS */}
+                <div className="mt-8 flex items-center gap-6">
+                    <button 
+                        onClick={playStatus ? pause : () => playWithId(songAlbum[0].id)}
+                        className="bg-green-500 w-14 h-14 rounded-full flex items-center justify-center hover:scale-105 hover:bg-green-400 transition-all shadow-xl text-black"
+                    >
+                        {playStatus ? <Pause fill="black" size={24}/> : <Play fill="black" size={24} className="ml-1"/>}
+                    </button>
+                    <Heart size={32} className="text-gray-400 hover:text-white cursor-pointer transition" />
+                    <MoreHorizontal size={32} className="text-gray-400 hover:text-white cursor-pointer transition" />
+                </div>
             </div>
 
-            <div className="px-6 pb-8">
-                <div className="grid grid-cols-4 gap-4 px-4 py-3 text-sm font-medium text-gray-400 border-b border-gray-700 mb-2">
-                    <div className="flex items-center gap-4">
-                        <span className="w-4 text-center">#</span>
-                        <span>Title</span>
-                    </div>
-                    <span>Album</span>
-                    <span className="hidden md:block">Date Added</span>
-                    <div className="flex justify-end">
-                        <img className="w-4 h-4" src={assets.clock_icon} alt="duration" />
+            {/* --- TRACKLIST SECTION --- */}
+            <div className="px-6">
+                {/* Table Header */}
+                <div className="grid grid-cols-[16px_4fr_3fr_minmax(120px,1fr)] gap-4 px-4 py-3 text-sm font-medium text-gray-400 border-b border-white/10 mb-4  top-[60px] bg-[#121212] z-10">
+                    <span className="text-center">#</span>
+                    <span>Title</span>
+                    <span className="hidden md:block">Plays</span>
+                    <div className="flex justify-end pr-8">
+                        <Clock size={16} />
                     </div>
                 </div>
 
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.8 }}
-                    className="space-y-1"
-                >
+                {/* Song List */}
+                <div className="flex flex-col gap-0.5">
                     {songAlbum.map((item, index) => (
-                        <motion.div
+                        <div
                             key={item.id}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.3, delay: index * 0.05 }}
-                            onClick={() => {
-                                playWithId(item.id),
-                                setSongPlaying(item.id)
-                            }
-                            }
                             onMouseEnter={() => setHoveredIndex(index)}
                             onMouseLeave={() => setHoveredIndex(null)}
-                            className={`grid grid-cols-4 gap-4 p-3 rounded-lg cursor-pointer transition-all duration-200 group ${
-                                isCurrentSong(item.id) 
-                                    ? 'bg-green-500 bg-opacity-20 text-green-400' 
-                                    : 'hover:bg-white hover:bg-opacity-10 text-gray-300'
-                            }`}
+                            onClick={() => { playWithId(item.id); setSongPlaying(item.id); }}
+                            className={`grid grid-cols-[16px_4fr_3fr_minmax(120px,1fr)] items-center gap-4 px-4 py-2 rounded-md cursor-pointer group transition-colors duration-300
+                                ${isCurrentSong(item.id) ? 'bg-white/10' : 'hover:bg-white/10'}`}
                         >
-                            <div className="flex items-center gap-4">
-                                <div className="w-4 text-center">
-                                    {hoveredIndex === index ? (
-                                        <img src={playsIcon} alt="play" className="w-4 h-4 mx-auto" />
-                                    ) : item.id === songPlaying ? (
-                                        <img src={musicPlaying} className="w-4 h-4 mx-auto" />
-                                    ) : (
-                                        <span className="text-gray-400 text-sm">{index + 1}</span>
-                                    )}
-                                </div>
-                                
-                                <img 
-                                    className="w-10 h-10 rounded object-cover shadow-md" 
-                                    src={item.image} 
-                                    alt={item.name}
-                                />
-                                
-                                <div className="min-w-0 flex-1">
-                                    <p className={`font-medium truncate ${
-                                        isCurrentSong(item.id) ? 'text-green-400' : 'text-white'
-                                    }`}>
-                                        {item.name}
-                                    </p>
-                                    {item.artist && (
-                                        <p className="text-sm text-gray-400 truncate">{item.artist}</p>
-                                    )}
-                                </div>
+                            {/* 1. Index / Play Icon */}
+                            <div className="flex items-center justify-center text-gray-400 text-base">
+                                {isCurrentSong(item.id) && playStatus ? (
+                                    <img src={musicPlaying} className="w-3.5 h-3.5 invert opacity-70" alt="playing"/>
+                                ) : hoveredIndex === index ? (
+                                    <Play size={14} fill="white" className="text-white" />
+                                ) : (
+                                    <span className="font-variant-numeric">{index + 1}</span>
+                                )}
+                            </div>
+                            
+                            {/* 2. Title & Artist */}
+                            <div className="flex flex-col min-w-0 pr-4">
+                                <span className={`font-medium text-base truncate ${isCurrentSong(item.id) ? 'text-green-500' : 'text-white'}`}>
+                                    {item.name}
+                                </span>
+                                <span className="text-sm text-gray-400 group-hover:text-white transition-colors truncate">
+                                    {item.artist || "Artist Name"}
+                                </span>
                             </div>
 
-                            <div className="flex items-center">
-                                <span className="text-sm text-gray-400 truncate">{albumData.name}</span>
+                            {/* 3. Plays (Mocked) */}
+                            <div className="hidden md:block text-sm text-gray-400 font-variant-numeric">
+                                {new Intl.NumberFormat('en-US').format(Math.floor(Math.random() * 10000000))}
                             </div>
 
-                            <div className="hidden md:flex items-center">
-                                <span className="text-sm text-gray-400">5 days ago</span>
+                            {/* 4. Duration & Heart */}
+                            <div className="flex items-center justify-end gap-5 text-sm text-gray-400 font-variant-numeric pr-2">
+                                <Heart size={16} className="hidden group-hover:block hover:text-green-500 transition cursor-pointer" />
+                                <span>{item.duration}</span>
                             </div>
-
-                            <div className="flex items-center justify-end">
-                                <span className="text-sm text-gray-400">{item.duration}</span>
-                            </div>
-                        </motion.div>
+                        </div>
                     ))}
-                </motion.div>
+                </div>
             </div>
+
+            {/* --- WIDGET 1: COPYRIGHT INFO (Footer của Album) --- */}
+            <div className="px-6 mt-12 mb-12">
+                <div className="text-xs text-gray-400 font-medium space-y-1">
+                    <p>{copyrightInfo.date}</p>
+                    <p>{copyrightInfo.copyright}</p>
+                    <p>{copyrightInfo.label}</p>
+                </div>
+            </div>
+
+            {/* --- WIDGET 2: MORE BY ARTIST --- */}
+            <div className="px-6 pb-8">
+                <div className="flex justify-between items-end mb-6">
+                    <h2 className="text-2xl font-bold hover:underline cursor-pointer">More by Artist Name</h2>
+                    <span className="text-xs font-bold text-gray-400 hover:text-white cursor-pointer uppercase tracking-widest">See Discography</span>
+                </div>
+                
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                    {moreAlbums.map((album) => (
+                        <div key={album.id} className="group p-4 bg-[#181818] hover:bg-[#282828] rounded-lg transition-all duration-300 cursor-pointer">
+                            <div className="relative mb-4 w-full aspect-square shadow-lg overflow-hidden rounded-md">
+                                <img src={album.image} alt={album.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                <div className="absolute bottom-2 right-2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-10">
+                                    <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center shadow-xl text-black hover:scale-105">
+                                        <Play fill="black" size={20} />
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 className="font-bold text-white truncate text-base">{album.name}</h3>
+                            <p className="text-sm text-gray-400 mt-1">{album.year} • Album</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
         </motion.div>
     );
 };

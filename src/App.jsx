@@ -8,10 +8,12 @@ import Search from "./components/features/Search";
 import ShowLyrics from "./components/player/ShowLyrics";
 import { AnimatePresence } from "framer-motion";
 import DisplaySong from "./components//display/DisplaySong";
+import ContextMenu from "./components/common/ContextMenu";
 import ScrollToTop from "./components/ScrollToTop";
 import Podcasts from "./pages/Podcasts"
 import PodcastDetail from "./pages/PodcastDetail";
 import { PlayerContext } from "./context/PlayerContext";
+import { Toaster } from 'react-hot-toast';
 
 const App = () => {
   const location = useLocation();
@@ -19,6 +21,17 @@ const App = () => {
 
   return (
     <div className="h-screen bg-black text-white">
+      <Toaster
+          position="bottom-center"
+          reverseOrder={false}
+          toastOptions={{
+            style: {
+              background: '#333',
+              color: '#fff',
+            },
+          }}
+        />
+      <ContextMenu />
     
     <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>

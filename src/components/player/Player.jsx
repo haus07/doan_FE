@@ -1,110 +1,152 @@
-import React, { useContext } from "react";
-import { assets, songsData } from '../../assets/assets';
-import { PlayerContext } from '../../context/PlayerContext'
-import PlayButton from "./PlayButton";
-import PauseButton from "./PauseButton";
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import {
-  FaVolumeMute,
-  FaVolumeOff,
-  FaVolumeDown,
-  FaVolumeUp,
-} from "react-icons/fa";
-
+import React, { useContext, useState } from "react";
+import { PlayerContext } from '../../context/PlayerContext';
+import { useNavigate } from "react-router-dom";
+import { 
+  Play, Pause, SkipBack, SkipForward, Shuffle, Repeat, 
+  Mic2, ListMusic, MonitorSpeaker, Maximize2, Minimize2,
+  Volume2, Volume1, VolumeX 
+} from "lucide-react";
 
 const Player = () => {
-
-  const { track, seekBar, seekBg, playStatus, play, pause, time, previous, next, seekSong, volume, handleVolumeChange } = useContext(PlayerContext);
-  console.log(track)
+  const { 
+    track, seekBar, seekBg, playStatus, play, pause, 
+    time, previous, next, seekSong, volume, handleVolumeChange 
+  } = useContext(PlayerContext);
+  
   const navigate = useNavigate();
-  const [activeMicId, setActiveMicId] = useState(null);
-    return (
-    <div className="h-[10%] bg-black flex justify-between items-center text-white px-6 border-t border-gray-800">
-        <div className="hidden lg:flex items-center gap-4 flex-1 min-w-0">
-            <img className="w-14 h-14 rounded shadow-md" src={track.image} alt="" />
-            <div className="overflow-hidden">
-                <p className="font-medium text-sm whitespace-nowrap overflow-hidden text-ellipsis">{track.name}</p>
-                <p className="text-xs text-gray-400 whitespace-nowrap overflow-hidden text-ellipsis">{track.desc?.slice(0,12)}</p>
+  const [isLyricsActive, setIsLyricsActive] = useState(false);
+
+  // Helper để chọn icon volume
+  const VolumeIcon = () => {
+    if (volume === 0) return <VolumeX size={20} />;
+    if (volume < 0.5) return <Volume1 size={20} />;
+    return <Volume2 size={20} />;
+  };
+
+  const toggleLyrics = () => {
+    if (isLyricsActive) {
+      navigate(-1); // Quay lại trang trước
+    } else {
+      navigate(`/showlyrics/${track.id}`);
+    }
+    setIsLyricsActive(!isLyricsActive);
+  };
+
+  return (
+    <div className="h-full bg-black flex justify-between items-center text-white px-4">
+        
+        {/* --- LEFT: TRACK INFO --- */}
+        <div className="hidden lg:flex items-center gap-4 w-[30%] min-w-[180px]">
+            <img className="w-14 h-14 rounded-md shadow-lg object-cover" src={track.image} alt={track.name} />
+            <div className="flex flex-col justify-center overflow-hidden">
+                <p className="font-medium text-sm text-white truncate hover:underline cursor-pointer">{track.name}</p>
+                <p className="text-xs text-gray-400 truncate hover:text-white hover:underline cursor-pointer">
+                    {track.desc || "Artist Name"}
+                </p>
             </div>
+             {/* Add Heart Icon here if you want */}
         </div>
         
-        <div className="flex flex-col items-center gap-2 flex-1 max-w-xl">
-            <div className="flex items-center gap-6">
-                <img className="w-5 h-5 opacity-70 hover:opacity-100 transition-opacity cursor-pointer" src={assets.shuffle_icon} alt="" />
-                <img onClick={previous} className="w-5 h-5 opacity-80 hover:opacity-100 transition-opacity cursor-pointer" src={assets.prev_icon} alt="" />
-              <div className="group relative rounded-full p-2 hover:scale-105 transition-transform">
-  {playStatus ? (
-                            <PauseButton onClick={pause}
-     className="bg-green-500 w-9 h-9 rounded-full shadow-lg flex items-center justify-center cursor-pointer "
-                            />
-  ) : (
-    <PlayButton
-      onClick={play}
-     className="bg-green-500 w-9 h-9 rounded-full shadow-lg flex items-center justify-center cursor-pointer "
+        {/* --- CENTER: CONTROLS & SEEK BAR --- */}
+        <div className="flex flex-col items-center max-w-[40%] w-full gap-1">
+            {/* Control Buttons */}
+            <div className="flex items-center gap-4 mb-1">
+                <Shuffle size={16} className="text-gray-400 hover:text-white cursor-pointer transition" />
+                
+                <SkipBack 
+                    onClick={previous} 
+                    size={20} 
+                    className="text-gray-300 hover:text-white cursor-pointer fill-current transition" 
+                />
+                
+                {/* Play/Pause Button (White Circle) */}
+                <div 
+                    onClick={playStatus ? pause : play}
+                    className="bg-white rounded-full p-2 cursor-pointer hover:scale-105 transition-transform active:scale-95"
+                >
+                    {playStatus ? (
+                        <Pause size={20} fill="black" className="text-black ml-[1px]" />
+                    ) : (
+                        <Play size={20} fill="black" className="text-black ml-[2px]" />
+                    )}
+                </div>
 
-    />
-  )}
-</div>
-
-                <img onClick={next} className="w-5 h-5 opacity-80 hover:opacity-100 transition-opacity cursor-pointer" src={assets.next_icon} alt="" />
-                <img className="w-5 h-5 opacity-70 hover:opacity-100 transition-opacity cursor-pointer" src={assets.loop_icon} alt="" />
+                <SkipForward 
+                    onClick={next} 
+                    size={20} 
+                    className="text-gray-300 hover:text-white cursor-pointer fill-current transition" 
+                />
+                
+                <Repeat size={16} className="text-gray-400 hover:text-white cursor-pointer transition" />
             </div>
-            <div className="flex items-center gap-2 w-full">
-                <p className="text-xs text-gray-400 w-10 text-right">{time.currentTime.minute}:{time.currentTime.second<10?"0"+time.currentTime.second:time.currentTime.second}</p>
-                <div ref={seekBg} onClick={seekSong} className="flex-grow h-1  bg-gray-600 hover:bg-gray-500 rounded-full cursor-pointer group relative">
-                    <div ref={seekBar} className="h-1 bg-green-500 hover:bg-green-400 rounded-full relative">
-                        <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-lg opacity-0 group-hover:opacity-100"></div>
+
+            {/* Seek Bar Row */}
+            <div className="flex items-center gap-2 w-full max-w-xl">
+                <span className="text-xs text-gray-400 w-8 text-right font-variant-numeric tabular-nums">
+                    {time.currentTime.minute}:{time.currentTime.second < 10 ? `0${time.currentTime.second}` : time.currentTime.second}
+                </span>
+                
+                <div 
+                    ref={seekBg} 
+                    onClick={seekSong} 
+                    className="group relative flex-1 h-1 bg-gray-600 rounded-full cursor-pointer"
+                >
+                    <div 
+                        ref={seekBar} 
+                        className="h-full bg-white group-hover:bg-green-500 rounded-full relative"
+                    >
+                        {/* Drag Handle (Only shows on group hover) */}
+                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
                 </div>
-                <p className="text-xs text-gray-400 w-10">{time.totalTime.minute}:{time.totalTime.second<10?"0"+time.totalTime.second:time.totalTime.second}</p>
+
+                <span className="text-xs text-gray-400 w-8 font-variant-numeric tabular-nums">
+                    {time.totalTime.minute}:{time.totalTime.second < 10 ? `0${time.totalTime.second}` : time.totalTime.second}
+                </span>
             </div>
         </div>
         
-        <div className="hidden lg:flex items-center gap-3 flex-1 justify-end">
-           <img
-  onClick={() => {
-    setActiveMicId(track.id === activeMicId ? null : track.id);
-    navigate(`/showlyrics/${track.id}`);
-  }}
-  className={`w-4 h-4 transition-opacity cursor-pointer ${
-    track.id === activeMicId ? "opacity-100 brightness-150" : "opacity-70 hover:opacity-100"
-  }`}
-  src={assets.mic_icon}
-  alt=""
-/>
-            <img className="w-4 h-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer" src={assets.queue_icon} alt="" />
-            <img className="w-4 h-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer" src={assets.speaker_icon} alt="" />
-            <div className="flex items-center gap-1 text-white text-xl">
-  {volume === 0 ? (
-    <FaVolumeMute />
-  ) : volume < 0.33 ? (
-    <FaVolumeOff />
-  ) : volume < 0.66 ? (
-    <FaVolumeDown />
-  ) : (
-    <FaVolumeUp />
-  )}
+        {/* --- RIGHT: EXTRA CONTROLS --- */}
+        <div className="hidden lg:flex items-center justify-end w-[30%] gap-3">
+            {/* Lyrics Button */}
+            <Mic2 
+                onClick={toggleLyrics}
+                size={18} 
+                className={`cursor-pointer transition hover:text-white ${isLyricsActive ? 'text-green-500' : 'text-gray-400'}`} 
+            />
+            
+            <ListMusic size={18} className="text-gray-400 hover:text-white cursor-pointer transition" />
+            <MonitorSpeaker size={18} className="text-gray-400 hover:text-white cursor-pointer transition" />
+            
+            {/* Volume Control */}
+            <div className="flex items-center gap-2 w-32 group">
+                <div className="text-gray-400 group-hover:text-white transition">
+                    <VolumeIcon />
+                </div>
+                
+                <div className="h-1 flex-1 bg-gray-600 rounded-full relative cursor-pointer overflow-hidden">
+                    {/* Input Range ẩn đè lên trên để kéo thả được */}
+                    <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.01"
+                        value={volume}
+                        onChange={handleVolumeChange}
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                    />
+                    {/* Visual Bar */}
+                    <div 
+                        className="h-full bg-gray-400 group-hover:bg-green-500 rounded-full" 
+                        style={{ width: `${volume * 100}%` }}
+                    />
+                </div>
+            </div>
 
-  <input
-    type="range"
-    min="0"
-    max="1"
-    step="0.01"
-    value={volume}
-    onChange={handleVolumeChange}
-    className="w-24 h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer 
-              [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 
-              [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:bg-white 
-              [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:hover:scale-110"
-  />
-</div>
-
-            <img className="w-4 h-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer ml-2" src={assets.mini_player_icon} alt="" />
-            <img className="w-4 h-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer" src={assets.zoom_icon} alt="" />
+            <Minimize2 size={16} className="text-gray-400 hover:text-white cursor-pointer transition ml-2" />
         </div>
     </div>
-)
+  );
 }
 
-export default Player
+export default Player;

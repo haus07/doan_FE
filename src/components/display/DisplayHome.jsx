@@ -36,7 +36,6 @@ const DisplayHome = () => {
       transition={{ duration: 0.5 }}
       className="p-6 text-white pb-24" // Thêm padding bottom để không bị Player che mất nội dung cuối
     >
-      <Navbar />
 
       <div className="mt-6 space-y-4">
         

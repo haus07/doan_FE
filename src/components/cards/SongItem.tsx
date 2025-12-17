@@ -10,10 +10,12 @@ interface SongItemProps {
   image: string;
   desc: string;
   id: string; // Hoặc 'number' tùy DB của bro
+  artistName: string;
 }
 
-const SongItem = ({ name, image, desc, id }: SongItemProps) => {
-  // 2. Lấy đúng những gì cần dùng, bỏ 'playWithId' nếu bro không dùng ở đây
+const SongItem = ({ name, image, desc, id, artistName }: SongItemProps) => {
+  
+  console.log(artistName);
   const { playStatus, playSong, pause, currentTrackId } = useContext(PlayerContext);
   
   const navigate = useNavigate();
@@ -60,7 +62,7 @@ const SongItem = ({ name, image, desc, id }: SongItemProps) => {
       </div>
 
       <p className="font-bold mt-2 mb-1 truncate text-white">{name}</p>
-      <p className="text-slate-400 text-sm line-clamp-2">{desc}</p>
+      <p className="text-slate-400 text-sm line-clamp-2">{artistName}</p>
     </div>
   );
 };

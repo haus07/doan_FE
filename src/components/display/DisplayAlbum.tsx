@@ -5,6 +5,7 @@ import { albumsData, songsData, assets } from '../../assets/assets';
 import musicPlaying from "../../assets/hinh/musicplaying.gif";
 import { motion } from "framer-motion";
 import { Clock, Heart, MoreHorizontal, Play, Pause } from "lucide-react";
+import { useGetAlbumDetail } from "@/services/albumService";
 
 // 1. Interface cho Mock Data (More by Artist)
 interface MoreAlbum {
@@ -22,17 +23,10 @@ const DisplayAlbum = () => {
 
   // --- DATA LOGIC ---
   // Tìm album hiện tại. Chuyển id sang số nếu cần thiết
-  const albumData = useMemo(() => {
-    return albumsData.find((item: any) => (item._id || item.id) == id) || albumsData[0];
-  }, [id]);
+  const { data: albumData, isLoading, isError } = useGetAlbumDetail(id);
+  console.log(albumData)
 
-  // 2. Tối ưu: Chỉ lọc bài hát khi ID thay đổi (tránh lọc lại khi re-render UI)
-  const songAlbum = useMemo(() => {
-    return songsData.filter((song: any) => 
-      // So sánh lỏng (==) để string "1" vẫn bằng number 1
-      (song.albumId || song.album_id) == id 
-    );
-  }, [id]);
+ 
 
   // Mock Widget "More by Artist"
   const moreAlbums: MoreAlbum[] = [
@@ -71,27 +65,27 @@ const DisplayAlbum = () => {
           >
             <img 
               className="w-52 h-52 md:w-60 md:h-60 rounded shadow-2xl object-cover hover:scale-[1.02] transition-transform duration-500" 
-              src={albumData.image} 
-              alt={albumData.name}
+              src={albumData?.image_url} 
+              alt={albumData?.name}
             />
           </motion.div>
           
           <div className="flex flex-col gap-2 w-full">
             <span className="text-xs font-bold uppercase tracking-widest text-white/80">Album</span>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tight drop-shadow-lg mb-2 leading-tight">
-              {albumData.name}
+              {albumData?.name}
             </h1>
             
             <div className="flex flex-wrap items-center gap-2 text-sm text-gray-300 font-medium">
               <div className="flex items-center gap-1 group cursor-pointer">
                 {/* Fallback image nếu không có spotify_logo */}
-                <img className="w-6 h-6 rounded-full bg-white" src={assets.spotify_logo || albumData.image} alt="Artist" />
+                <img className="w-6 h-6 rounded-full bg-white" src={assets.spotify_logo || albumData?.image} alt="Artist" />
                 <span className="text-white hover:underline font-bold transition-colors">Artist Name</span>
               </div>
               <span className="text-white/60">•</span>
               <span>2024</span>
               <span className="text-white/60">•</span>
-              <span className="text-white">{songAlbum.length} songs,</span>
+              <span className="text-white">{albumData?.songs?.length} songs,</span>
               <span className="text-gray-400 opacity-80">{totalDuration}</span>
             </div>
           </div>
@@ -101,7 +95,7 @@ const DisplayAlbum = () => {
         <div className="mt-8 flex items-center gap-6">
           <button 
             // Logic Play: Nếu đang play thì pause, ngược lại play bài đầu tiên của album
-            onClick={playStatus ? pause : () => playWithId(songAlbum[0]?.id)}
+            onClick={playStatus ? pause : () => playWithId(albumData?.songs[0]?.id)}
             className="bg-green-500 w-14 h-14 rounded-full flex items-center justify-center hover:scale-105 hover:bg-green-400 transition-all shadow-xl text-black"
           >
             {playStatus ? <Pause fill="black" size={24}/> : <Play fill="black" size={24} className="ml-1"/>}
@@ -125,14 +119,14 @@ const DisplayAlbum = () => {
 
         {/* Song List */}
         <div className="flex flex-col gap-0.5">
-          {songAlbum.map((item: any, index: number) => {
+          {albumData?.songs?.map((item: any, index: number) => {
             const isActive = isCurrentSong(item.id || item._id);
             return (
               <div
                 key={index}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                onClick={() => playWithId(item.id || item._id)}
+                onClick={() => playWithId(item.id)}
                 className={`grid grid-cols-[16px_4fr_3fr_minmax(60px,1fr)] items-center gap-4 px-4 py-2.5 rounded-md cursor-pointer group transition-colors duration-200
                   ${isActive ? 'bg-white/10' : 'hover:bg-white/10'}`}
               >
@@ -153,7 +147,7 @@ const DisplayAlbum = () => {
                     {item.name}
                   </span>
                   <span className="text-sm text-gray-400 group-hover:text-white transition-colors truncate">
-                    {item.artist || "Artist Name"}
+                    {item.artist_name || "Artist Name"}
                   </span>
                 </div>
 

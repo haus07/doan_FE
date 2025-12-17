@@ -59,7 +59,7 @@ const PlayerContextProvider = (props: ProviderProps) => {
     // State
     const [songsData, setSongsData] = useState<Song[] | null>(null);
     // Ép kiểu defaultSongs[0] thành Song để đảm bảo type safety
-    const [track, setTrack] = useState<Song>(defaultSongs[0] as unknown as Song); 
+    const [track, setTrack] = useState<Song>(null); 
     const [playStatus, setPlayStatus] = useState<boolean>(false);
     
     // State thời gian
@@ -83,13 +83,12 @@ const PlayerContextProvider = (props: ProviderProps) => {
     }
 
     const playWithId = async (id: number | string) => {
-        // Tìm song trong songsData (nếu có) hoặc defaultSongs
-        // Sử dụng 'as Song[]' nếu bro chắc chắn defaultSongs đúng format
-        const sourceData = songsData || (defaultSongs as unknown as Song[]);
+        const sourceData = songsData ;
         const song = sourceData.find((item) => item.id === id);
 
         if (song && audioRef.current) {
             await setTrack(song);
+            console.log("check song play");
             audioRef.current.play();
             setPlayStatus(true);
         }

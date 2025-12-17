@@ -83,7 +83,7 @@ const App = () => {
 
       {/* Audio Player Core */}
       {/* Lưu ý: 'track.file' phải khớp với interface Song trong PlayerContext */}
-      <audio ref={audioRef} src={track?.file} preload="auto"></audio>
+      <audio ref={audioRef} src={track?.file_path} preload="auto"></audio>
     </div>
   );
 };

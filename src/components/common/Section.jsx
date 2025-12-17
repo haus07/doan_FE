@@ -21,10 +21,10 @@ const Section = ({ title, data, type }) => {
              return <Artist key={item.id} id={item.id} img={item.image} name={item.name} role="Artist" albumID={item.albumId} />
           }
           if (type === 'album') {
-             return <AlbumItem key={index} id={item.id} name={item.name} desc={item.desc} image={item.image} />
+             return <AlbumItem key={index} id={item.id} name={item.name} desc={item.desc} image={item.image_url} />
           }
           if (type === 'song') {
-             return <SongItem key={item.id || index} id={item.id} name={item.name} desc={item.desc} image={item.image} />
+            return <SongItem key={item.id || index} id={item.id} name={item.name} desc={item.desc} image={item.image} artistName={ item.artist_name } />
           }
           return null;
         })}

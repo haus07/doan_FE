@@ -111,7 +111,9 @@ const Player: React.FC = () => {
       navigate(`/showlyrics/${track.id}`);
     }
     setIsLyricsActive(!isLyricsActive);
-  };
+    };
+    
+    if(!track) return null
 
   return (
     <div className="h-full bg-black flex justify-between items-center text-white px-8 relative z-50">
@@ -161,7 +163,7 @@ const Player: React.FC = () => {
             </div>
 
             {/* Seek Bar Row */}
-            <div className="flex items-center gap-2 w-full max-w-xl group mb-3">
+            <div className="flex items-center gap-2 w-full max-w-xl group mb-3  ">
                 <span className="text-xs text-gray-400 w-8 text-right font-variant-numeric tabular-nums">
                     {time.currentTime.minute}:{time.currentTime.second < 10 ? `0${time.currentTime.second}` : time.currentTime.second}
                 </span>

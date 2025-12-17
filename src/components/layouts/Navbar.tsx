@@ -1,10 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect,useContext } from "react";
 import { assets } from "../../assets/assets";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Home, Bell, Users, ArrowDownCircle, X } from "lucide-react";
+import { PopupContext } from "../../context/PopUpContext";
+import { JWTContext } from "@/context/JwtContext";
 
 // --- MOCK DATA FOR RECENT SEARCHES ---
+
+
 const MOCK_RECENT_SEARCHES = [
   {
     id: 1,
@@ -48,6 +52,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname.toLowerCase();
+  const { setIsLoginOpen } = useContext(PopupContext);
   
   // --- STATE ---
   const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -55,11 +60,8 @@ const Navbar = () => {
   const searchContainerRef = useRef(null);
 
   // --- MOCK USER ---
-  const isLoggedIn = true; 
-  const user = {
-    avatarInitial: "T",
-    color: "bg-purple-500"
-  };
+  const { isLoggedIn, user } = useContext(JWTContext);
+  console.log(isLoggedIn, user);
 
   // Close search dropdown when clicking outside
   useEffect(() => {
@@ -186,18 +188,17 @@ const Navbar = () => {
         {/* RIGHT: User Actions & Profile */}
         <div className="flex items-center gap-2 min-w-[200px] justify-end">
           
-          {!isLoggedIn ? (
+          {!user ? (
              <>
                 <button className="text-gray-400 font-bold hover:text-white px-4">Sign up</button>
-                <button className="bg-white text-black font-bold px-8 py-3 rounded-full hover:scale-105 transition">Log in</button>
+              <button
+               onClick={() => setIsLoginOpen(true)}
+                className="bg-white text-black font-bold px-8 py-3 rounded-full hover:scale-105 transition">Log in</button>
              </>
           ) : (
              <>
                {/* Install App */}
-               <div className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold text-gray-300 hover:text-white hover:scale-105 cursor-pointer transition-all mr-2">
-                  <ArrowDownCircle size={18} />
-                  <span>Install App</span>
-               </div>
+               
 
                {/* Notifications */}
                <div className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white cursor-pointer relative bg-black/50 rounded-full hover:bg-[#2A2A2A] transition">

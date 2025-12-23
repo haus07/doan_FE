@@ -52,11 +52,9 @@ const App = () => {
       <LoginModal 
         isOpen={isLoginOpen} 
         onClose={() => {
-          console.log("dong dc bat")
           setIsLoginOpen(false)
         }}
         onSwitchToRegister={() => {
-           console.log("Switch to register logic here");
            // setIsLoginOpen(false); setIsRegisterOpen(true);
         }}
       />

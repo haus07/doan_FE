@@ -14,7 +14,7 @@ export const useHandleGetPopularArtist = () => {
             return response.data.data
             
         },
-        staleTime: 1000 * 60 *12
+        staleTime: 1000 * 60 * 60 * 12
     })
 }
 
@@ -33,7 +33,6 @@ export const useHandleGetArtistDetail = (id) => {
         enabled: !!id,
         staleTime: 1000 * 60 * 60 * 12, 
     });
-    console.log(query)
 
     // Dùng useEffect để sync data vào Context
     useEffect(() => {

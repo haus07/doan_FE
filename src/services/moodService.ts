@@ -1,7 +1,7 @@
 // src/services/moodService.ts
 
 // Giả lập URL backend (đổi lại port nếu ông dùng port khác)
-const BACKEND_URL = "http://localhost:8000"; 
+const BACKEND_URL = "http://backend-spotify.test"; 
 
 export const useGetMoods = () => {
   // Mock data khớp 100% với Seeder Laravel (10 items)

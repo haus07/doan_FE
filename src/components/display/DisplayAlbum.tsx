@@ -65,7 +65,7 @@ const DisplayAlbum = () => {
           >
             <img 
               className="w-52 h-52 md:w-60 md:h-60 rounded shadow-2xl object-cover hover:scale-[1.02] transition-transform duration-500" 
-              src={albumData?.image_url} 
+              src={albumData?.image} 
               alt={albumData?.name}
             />
           </motion.div>
@@ -147,7 +147,7 @@ const DisplayAlbum = () => {
                     {item.name}
                   </span>
                   <span className="text-sm text-gray-400 group-hover:text-white transition-colors truncate">
-                    {item.artist_name || "Artist Name"}
+                    {albumData.artist_name || "Artist Name"}
                   </span>
                 </div>
 

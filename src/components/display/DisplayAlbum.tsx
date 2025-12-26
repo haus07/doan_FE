@@ -6,6 +6,7 @@ import musicPlaying from "../../assets/hinh/musicplaying.gif";
 import { motion } from "framer-motion";
 import { Clock, Heart, MoreHorizontal, Play, Pause } from "lucide-react";
 import { useGetAlbumDetail } from "@/services/albumService";
+import { LikeButton } from "../common/LikeButton";
 
 // 1. Interface cho Mock Data (More by Artist)
 interface MoreAlbum {
@@ -158,7 +159,7 @@ const DisplayAlbum = () => {
 
                 {/* 4. Duration & Heart */}
                 <div className="flex items-center justify-end gap-5 text-sm text-gray-400 font-variant-numeric pr-2">
-                  <Heart size={16} className={`hidden sm:block ${isActive ? 'text-green-500 block' : 'group-hover:block'} hover:text-green-500 transition cursor-pointer`} />
+                  <LikeButton targetId={item.id} targetType="song" size={15}/>
                   <span>{item.duration}</span>
                 </div>
               </div>
